@@ -2,7 +2,7 @@
 Ana Carolina Tamie Yoshimura
 Natasha Almeida da Silva
 
-Script do banco: https://drive.google.com/drive/folders/1ryST4Pp1KcVTm2WJbCX9Y5LclLpF_ux0?usp=sharing || script_banco\script_banco_nana_roupas.sql || 
+Script do banco: https://drive.google.com/drive/folders/1ryST4Pp1KcVTm2WJbCX9Y5LclLpF_ux0?usp=sharing || script_banco\script_banco_nana_roupas.sql
 
 PPT: https://drive.google.com/drive/folders/1xVyKtJpvWXYVuHuxeKVeurpq4CpIhYAM?usp=sharing
 

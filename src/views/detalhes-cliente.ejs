@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    Detalhes do cliente | Nana Roupas
+  </title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/detalhes-cliente.css">
+</head>
+
+
+
+
+
+<body>
+  <a onclick="
+    window.location.href = '/lista-clientes';
+    ">
+    <svg class="back-button" viewBox="0 0 44 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M30.6603 17C29.5596 18.9064 27.8606 20.3963 25.8268 21.2388C23.793 22.0812 21.5381 22.229 19.4117 21.6592C17.2854 21.0895 15.4065 19.834 14.0664 18.0876C12.7263 16.3411 12 14.2013 12 12C12 9.79864 12.7263 7.65884 14.0664 5.9124C15.4065 4.16596 17.2854 2.91049 19.4117 2.34074C21.5381 1.77099 23.793 1.9188 25.8268 2.76121C27.8606 3.60363 29.5596 5.09356 30.6603 6.99998M22.0002 7.99998L18.0002 12M18.0002 12L22.0002 16M18.0002 12H32.0002"
+        stroke="#995277" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </a>
+  <div class="header">
+    <h1 class="title">
+      Detalhes do cliente
+    </h1>
+  </div>
+  <div class="dados-do-perfil">
+    <h2 class="subtitle">
+      Dados do perfil
+    </h2>
+    <div class="grid-dados-do-perfil">
+
+      <div class="w33">
+        <p class="label-detalhes">Nome completo</p>
+        <p class="dado">
+          <%= cliente.nome_cliente %>
+        </p>
+      </div>
+
+
+
+      <div class="w33">
+        <p class="label-detalhes">Gênero</p>
+        <p class="dado">
+          <%= cliente.genero %>
+        </p>
+      </div>
+
+      <div class="w33">
+        <p class="label-detalhes">Data de nascimento</p>
+        <p class="dado">
+          <%= cliente.data_nasc.toISOString().split('T')[0] %>
+        </p>
+      </div>
+      <div class="w33">
+        <p class="label-detalhes">CPF</p>
+        <p class="dado">
+          <%= cliente.cpf %>
+        </p>
+      </div>
+
+      <div class="w33">
+        <p class="label-detalhes">Telefone</p>
+        <p class="dado">
+          <%= cliente.telefone %>
+        </p>
+      </div>
+
+      <div class="w33">
+        <p class="label-detalhes">E-mail</p>
+        <p class="dado">
+          <%= cliente.email %>
+        </p>
+      </div>
+
+    </div>
+  </div>
+  <div class="enderecos-cartoes">
+    <div class="enderecos">
+      <h2 class="subtitle">
+        Endereços
+      </h2>
+      <div class="grid-enderecos-cartoes">
+
+        <% if (enderecos && enderecos.length> 0) { %>
+          <% enderecos.forEach(end=> { %>
+            <div class="card">
+              <p class="card-title">
+                <%= end.nome_endereco %> - <strong>
+                    <%= end.tp_endereco.toUpperCase() %>
+                  </strong>
+              </p>
+              <p class="card-info">
+                <%= end.tp_logradouro %>
+                  <%= end.logradouro %>, <%= end.numero %>
+                      <br>
+                      <%= end.bairro %>, <%= end.cidade %> - <%= end.estado %> | <%= end.pais %>
+                              <br>
+                              CEP: <%= end.cep %>
+                                <br>
+                                <%= end.tp_residencia %>
+                                  <% if (end.complemento) { %>
+                                    - <%= end.complemento %>
+                                      <% } %>
+              </p>
+            </div>
+            <% }) %>
+              <% } else { %>
+                <div class="card" style="opacity: 0.6;">
+                  <p class="card-info">Nenhum endereço cadastrado para este cliente.</p>
+                </div>
+                <% } %>
+
+      </div>
+    </div>
+    <!--div class="cartoes">
+      <h2 class="subtitle">
+        Cartões
+      </h2>
+      <div class="grid-enderecos-cartoes">
+        <div class="card">
+          <p class="card-title">
+            Visa &#9679; Natasha Almeida da Silva
+          </p>
+          <p class="card-info">
+            **** **** **** 5195
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-title">
+            Mastercard &#9679; Natasha Almeida da Silva
+          </p>
+          <p class="card-info">
+            **** **** **** 5195
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-title">
+            Visa &#9679; Natasha Almeida da Silva
+          </p>
+          <p class="card-info">
+            **** **** **** 5195
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-title">
+            Visa &#9679; Natasha Almeida da Silva
+          </p>
+          <p class="card-info">
+            **** **** **** 5195
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-title">
+            Visa &#9679; Natasha Almeida da Silva
+          </p>
+          <p class="card-info">
+            **** **** **** 5195
+          </p>
+        </div>
+      </div>
+    </div>
+  </div-->
+</body>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>
+        Detalhes <%= produto.nome_produto %> | Nana Roupas
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar-horizontal.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/detalhes-produto.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+
+<body>
+    <div class="pagina-detalhes">
+
+        <!-- Navbar -->
+        <div class="navbar-container">
+            <%- include('navbar-horizontal', { paginaAtiva: '' }) %>
+        </div>
+
+        <!-- Botão voltar -->
+        <a href="/produtos" class="btn-voltar">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M12.5 15L7.5 10L12.5 5" stroke="#66334D" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+            Voltar aos produtos
+        </a>
+
+        <!-- Conteúdo principal -->
+        <div class="detalhes-container">
+
+            <!-- Imagem do produto -->
+
+
+
+            <div class="detalhes-imagem">
+                <img id="imagem-produto" src="<%= produto.url_imagem || '/img/sem-imagem.png' %>"
+                    alt="<%= produto.nome_produto %>"
+                    style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
+            </div>
+            <!-- Informações -->
+            <div class="detalhes-info">
+                <div>
+                    <h1 class="detalhes-nome">
+                        <%= produto.nome_produto %>
+                    </h1>
+                    <p class="detalhes-categoria">
+                        <%= produto.categoria %>
+                    </p>
+                </div>
+
+                <p class="detalhes-preco">
+                    R$ <%= parseFloat(produto.valor_produto).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) %>
+                </p>
+
+                <!-- Seletor de tamanho -->
+                <div>
+                    <p class="selecao-label">Tamanhos disponíveis</p>
+                    <div class="opcoes-grupo" id="grupo-tamanhos">
+                        <% const tamanhos=[...new Set(produto.variacoes.map(v=> v.tamanho))];
+                            tamanhos.forEach(tamanho => {
+                            %>
+                            <button class="opcao-btn" data-tipo="tamanho" data-valor="<%= tamanho %>"
+                                onclick="selecionarOpcao(this, 'tamanho')">
+                                <%= tamanho %>
+                            </button>
+                            <% }) %>
+                    </div>
+                </div>
+
+                <!-- Seletor de cor -->
+                <div>
+                    <p class="selecao-label">Cores disponíveis</p>
+                    <div class="opcoes-grupo" id="grupo-cores">
+                        <% const coresVistas=new Set(); produto.variacoes.forEach(v=> {
+                            if (!coresVistas.has(v.id_cor)) {
+                            coresVistas.add(v.id_cor);
+                            %>
+                            <button class="opcao-btn" data-tipo="cor" data-valor="<%= v.id_cor %>"
+                                onclick="selecionarOpcao(this, 'cor')">
+                                <%= v.nome_cor %>
+                            </button>
+                            <% } }); %>
+                    </div>
+                </div>
+
+                <!-- Aviso -->
+                <div id="msg-aviso" class="msg-aviso">
+                    Selecione um tamanho e uma cor antes de continuar.
+                </div>
+
+                <!-- Materiais -->
+                <div class="detalhes-materiais">
+                    <%= produto.materiais || 'Informações sobre materiais não disponíveis.' %>
+                </div>
+            </div>
+
+            <!-- Botões de ação, obs: ir-pagamento-botao-->
+
+            <div class="detalhes-acoes">
+
+                <div class="seletor-quantidade">
+                    <p class="selecao-label">Quantidade</p>
+                    <div class="quantidade-wrap">
+                        <button class="quantidade-btn" onclick="ajustarQuantidade(-1)">−</button>
+                        <input class="quantidade-input" id="quantidade" type="number" value="1" min="1" max="99"
+                            readonly>
+                        <button class="quantidade-btn" onclick="ajustarQuantidade(1)">+</button>
+                    </div>
+                </div>
+                <button class="btn-carrinho" onclick="adicionarAoCarrinho()">
+                    Adicionar ao carrinho
+                </button>
+                <button class="btn-comprar" onclick="comprarAgora()">Comprar agora!</button>
+            </div>
+        </div>
+
+
+        <div id="dados-variacoes" style="display:none"
+            data-variacoes="<%- encodeURIComponent(JSON.stringify(produto.variacoes)) %>">
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        <script src="/js/detalhes-produto.js"></script>
+
+    </div>
+</body>
+
+</html>

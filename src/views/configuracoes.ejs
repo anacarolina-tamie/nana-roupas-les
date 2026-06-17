@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Configurações | Nana Roupas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar-horizontal.css">
+    <link rel="stylesheet" href="/css/cards.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/table.css">
+    <link rel="stylesheet" href="/css/configuracoes.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <meta name="cliente-id" content="<%= clienteId %>">
+</head>
+
+<body>
+    <div>
+        <div class="navbar-container">
+            <%- include('navbar-horizontal') %>
+        </div>
+
+        <div class="layout">
+            <div class="titulo-tabela">
+                <h1>Configurações</h1>
+            </div>
+        </div>
+
+        <div class="container-configuracoes">
+
+            <!-- SIDEBAR: Dados do perfil -->
+            <div class="sidebar-configuracoes">
+                <div class="grid-dados-do-perfil">
+                    <div class="div-titulo-sidebar">
+                        <p class="titulo-sidebar">Dados do perfil</p>
+                        <a href="/editar-cliente/<%= clienteId %>">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M15.34 7.042L17.608 9.30999M20.65 7.33L17.32 4L4.009 17.311L4 20.65L7.33901 20.641L20.65 7.33Z"
+                                    stroke="#995277" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="div-campo">
+                        <p class="label">Nome completo</p>
+                        <p class="campo" id="perfil-nome">—</p>
+                    </div>
+                    <div class="div-campo">
+                        <p class="label">Gênero</p>
+                        <p class="campo" id="perfil-genero">—</p>
+                    </div>
+                    <div class="div-campo">
+                        <p class="label">Data de nascimento</p>
+                        <p class="campo" id="perfil-data-nasc">—</p>
+                    </div>
+                    <div class="div-campo">
+                        <p class="label">CPF</p>
+                        <p class="campo" id="perfil-cpf">—</p>
+                    </div>
+                    <div class="div-campo">
+                        <p class="label">Telefone</p>
+                        <p class="campo" id="perfil-telefone">—</p>
+                    </div>
+                    <div class="div-campo">
+                        <p class="label">Email</p>
+                        <p class="campo" id="perfil-email">—</p>
+                    </div>
+
+                    <div class="div-botoes">
+                        <button class="botao-alterar-senha" onclick="sairDaConta()">
+                            Sair da conta
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTEÚDO PRINCIPAL -->
+            <div class="conteudo-configuracoes">
+                <div class="div-enderecos-cartoes">
+
+                    <!-- ENDEREÇO DE COBRANÇA -->
+                    <div class="div-secao-conteudo">
+                        <div class="conteudo-titulo">Endereço de cobrança</div>
+                        <div id="lista-endereco-cobranca">
+                            <p class="carregando">Carregando...</p>
+                        </div>
+                    </div>
+
+                    <!-- ENDEREÇOS DE ENTREGA -->
+                    <div class="div-secao-conteudo">
+                        <div class="conteudo-titulo">Endereços de entrega</div>
+                        <div id="lista-enderecos-entrega">
+                            <p class="carregando">Carregando...</p>
+                        </div>
+                        <button class="botao-adicionar" onclick="window.location.href='/adicionar-endereco'">
+                            + Adicionar endereço
+                        </button>
+                    </div>
+
+                    <!-- CARTÕES -->
+                    <div class="div-secao-conteudo">
+                        <div class="conteudo-titulo">Cartões</div>
+                        <div id="lista-cartoes">
+                            <p class="carregando">Carregando...</p>
+                        </div>
+                        <button class="botao-adicionar" onclick="window.location.href='/adicionar-cartao'">
+                            + Adicionar cartão
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- CUPONS -->
+                <div class="div-cupons">
+                    <div class="div-secao-conteudo">
+                        <div class="conteudo-titulo">Cupons de troco</div>
+                        <div id="lista-cupons-troco">
+                            <p class="carregando">Carregando...</p>
+                        </div>
+                    </div>
+                    <div class="div-secao-conteudo">
+                        <div class="conteudo-titulo">Cupons de troca</div>
+                        <div id="lista-cupons-troca">
+                            <p class="carregando">Carregando...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO -->
+    <div id="modal-confirmacao" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <p id="modal-mensagem">Tem certeza que deseja excluir?</p>
+            <div class="modal-botoes">
+                <button class="botao-cancelar-modal" onclick="fecharModal()">Cancelar</button>
+                <button class="botao-confirmar-modal" id="btn-confirmar-exclusao">Excluir</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const ID_CLIENTE = '<%= clienteId %>';
+    </script>
+
+    <script src="/js/configuracoes.js"></script>
+
+</body>
+
+</html>

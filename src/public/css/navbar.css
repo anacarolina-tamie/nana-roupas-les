@@ -1,0 +1,103 @@
+.navbar {
+    background-color: #66334D;
+    min-height: 100vh;
+    width: 231px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    padding-top: 64px;
+    padding-left: 24px;
+    gap: 24px;
+    list-style: none;
+}
+
+.navbar-logo {
+    width: 80%;
+}
+
+.espace-aba {
+    height: 44px;
+    width: 183px;
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
+    text-decoration: none;
+    padding-left: 0;
+}
+
+.aba {
+    background-color: #66334D;
+    border-radius: 12px;
+    border: none;
+    height: 44px;
+    width: 183px;
+    margin-left: 0;
+    list-style: none;
+}
+
+.aba:hover {
+    background-color: rgba(235, 196, 216, 0.2);
+    border-radius: 12px;
+    border: none;
+    height: 44px;
+    width: 183px;
+    margin-left: 0;
+    list-style: none;
+}
+
+.aba-select {
+    background-color: rgba(235, 196, 216, 0.2);
+    border-radius: 12px;
+    border: none;
+    height: 44px;
+    width: 183px;
+    margin-left: 0;
+    list-style: none;
+}
+
+.text-aba {
+    text-align: left;
+    font-family: Montserrat;
+    color: #F7F7F7;
+    font-size: 16px;
+    border: none;
+    background: none;
+}
+
+.containers-abas {
+    max-width: 183px;
+    max-height: 200px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.containers-navbar {
+    max-width: 231px;
+    max-height: 768px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    gap: 24px;
+    top: 0;
+    left: 0;
+}
+
+.botao-sair-conta {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 16px;
+  max-height: 42px;
+  background-color: rgb(235, 196, 216);
+  color: rgb(102, 51, 77);
+  white-space: nowrap;
+  border-radius: 8px;
+  border: none;
+  padding: 0.7em 1.0em;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}

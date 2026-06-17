@@ -1,0 +1,19 @@
+.botao-excluir {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  width: fit-content;
+  height: fit-content;
+}
+
+.radio-opcao {
+  display: flex;
+  gap: 10px;
+}
+
+input[type="radio"] {
+  accent-color: #66334D;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}

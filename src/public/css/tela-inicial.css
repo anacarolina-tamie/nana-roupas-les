@@ -1,0 +1,20 @@
+.container {
+  padding: 40px 30px;
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.titulo h1 {
+  display: flex;
+}
+
+.linha-tela-inicial {
+  flex: 1;
+  background-color: #EBC4D8;
+  height: 1px;
+  margin-left: 12px;
+}

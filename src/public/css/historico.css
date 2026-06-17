@@ -1,0 +1,425 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #faf7f8;
+  color: #2a1f23;
+}
+
+/* ══ CABEÇALHO (mantido igual ao original) ══ */
+.titulo-tabela {
+  padding: 32px 48px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  z-index: 100;
+}
+
+.titulo-tabela h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #66334D;
+}
+
+/* ══ LISTAGEM DE PEDIDOS ══ */
+.historico-lista {
+  display: flex;
+  flex-direction: column;
+  padding-top: 48px;
+  padding: 48px 60px;
+}
+
+.pedido-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: #fff;
+  border-bottom: 1px solid #f0e8ec;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.pedido-row:first-child { border-radius: 12px 12px 0 0; }
+.pedido-row:last-child  { border-radius: 0 0 12px 12px; border-bottom: none; }
+.pedido-row:only-child  { border-radius: 12px; }
+.pedido-row:hover       { background: #fdf3f7; }
+
+.pedido-row-capa {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f0e8ec;
+}
+.pedido-row-capa img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pedido-row-info { flex: 1; }
+
+.pedido-row-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.pedido-numero {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2a1f23;
+}
+
+.pedido-row-meta {
+  font-size: 13px;
+  color: #7c6b71;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dot { color: #c9aab7; }
+.pedido-row-arrow { flex-shrink: 0; }
+
+/* ══ BADGES DE STATUS ══ */
+.pedido-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-em-processamento { background: #fff3cd; color: #856404; }
+.status-aprovado         { background: #d1e7dd; color: #0f5132; }
+.status-entregue         { background: #d1e7dd; color: #0f5132; }
+.status-em-trânsito,
+.status-em-transito      { background: #cff4fc; color: #055160; }
+.status-cancelado        { background: #f8d7da; color: #842029; }
+
+/* ══ CABEÇALHO DO DETALHE ══ */
+.detalhe-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 48px 20px;
+  border-bottom: 1px solid #f0e8ec;
+  background: #fff;
+  flex-wrap: wrap;
+}
+
+.btn-voltar-detalhe {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: #995277;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+.btn-voltar-detalhe:hover { opacity: 0.7; }
+
+.detalhe-titulo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.detalhe-titulo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2a1f23;
+}
+
+.detalhe-data {
+  font-size: 13px;
+  color: #7c6b71;
+  margin-left: auto;
+}
+
+/* ══ CORPO DO DETALHE ══ */
+.detalhe-body {
+  padding: 24px 48px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 760px;
+}
+
+.detalhe-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(42,31,35,.06);
+}
+
+.detalhe-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #995277;
+  margin-bottom: 16px;
+}
+
+/* Item dentro do detalhe */
+.detalhe-item {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #f0e8ec;
+}
+.detalhe-item:first-child { padding-top: 0; }
+.detalhe-item:last-child  { border-bottom: none; padding-bottom: 0; }
+
+.detalhe-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: #f0e8ec;
+}
+
+.detalhe-item-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+
+.detalhe-item-nome {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2a1f23;
+}
+
+.detalhe-item-meta {
+  font-size: 12px;
+  color: #7c6b71;
+}
+
+.detalhe-item-preco {
+  font-size: 13px;
+  font-weight: 600;
+  color: #66334D;
+}
+
+/* Botão trocar item */
+.btn-trocar-item {
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: none;
+  border: 1px solid #66334D;
+  border-radius: 8px;
+  color: #66334D;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  width: fit-content;
+  transition: background .15s;
+}
+.btn-trocar-item:hover { background: rgba(102,51,77,.08); }
+
+/* ══ RESUMO FINANCEIRO ══ */
+.resumo-financeiro { display: flex; flex-direction: column; gap: 10px; }
+
+.resumo-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #7c6b71;
+}
+.resumo-row span:last-child { font-weight: 500; color: #2a1f23; }
+
+.resumo-total {
+  padding-top: 12px;
+  border-top: 1px solid #f0e8ec;
+  font-size: 15px;
+  font-weight: 700;
+}
+.resumo-total span { color: #2a1f23 !important; }
+
+/* ══ AÇÕES ══ */
+.btn-solicitar-troca {
+  width: 100%;
+  padding: 14px;
+  background: #66334D;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn-solicitar-troca:hover { background: #552940; }
+
+.troca-obs {
+  font-size: 12px;
+  color: #7c6b71;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* ══ STATUS BOXES ══ */
+.status-box {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.status-pendente  { background:#fff8e1; border:1px solid #ffe082; color:#7c6000; }
+.status-pendente strong { display:block; margin-bottom:2px; }
+.status-aprovada  { background:#e8f5e9; border:1px solid #a5d6a7; color:#2e7d32; }
+.status-aprovada strong { display:block; margin-bottom:6px; }
+.status-reprovada { background:#fdecea; border:1px solid #ef9a9a; color:#b71c1c; }
+.status-reprovada strong { display:block; }
+
+.cupom-linha {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+.cupom-codigo { font-weight:700; letter-spacing:.04em; color:#1b5e20; }
+
+/* ══ MODAL DE TROCA ══ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-troca {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px 32px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0,0,0,.15);
+}
+
+.modal-troca h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #2a1f23;
+  margin-bottom: 10px;
+}
+
+.modal-troca p {
+  font-size: 14px;
+  color: #7c6b71;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.modal-troca-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-cancelar-modal {
+  padding: 10px 20px;
+  background: none;
+  border: 1px solid #c9aab7;
+  border-radius: 8px;
+  color: #7c6b71;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn-cancelar-modal:hover { background: #faf7f8; }
+
+.btn-confirmar-modal {
+  padding: 10px 20px;
+  background: #66334D;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-confirmar-modal:hover    { background: #552940; }
+.btn-confirmar-modal:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ══ EMPTY STATE ══ */
+.empty-state {
+  text-align: center;
+  padding: 60px 0;
+  color: #7c6b71;
+  font-size: 15px;
+}
+.empty-state a {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 12px 28px;
+  background: #66334D;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.empty-state a:hover { background: #552940; }
+
+/* ══ RESPONSIVO ══ */
+@media (max-width: 600px) {
+  .historico-lista,
+  .detalhe-body,
+  .detalhe-header,
+  .titulo-tabela { padding-left: 16px; padding-right: 16px; }
+}
+
+.btn-solicitar-troca:disabled,
+.btn-trocar-item:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.status-troca-total {
+  background: #e8d5f0;
+  color: #5b2d82;
+}
+
+.status-troca-parcial {
+  background: #fde8d8;
+  color: #8a3a0f;
+}
+
+.status-nao-recebida {
+  background: #fff8e1;
+  border: 1.5px solid #f0c040;
+  color: #7a5c00;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.status-mercadoria-recebida {
+  background: #f0faf4;
+  border: 1.5px solid #6fcf97;
+  color: #1a5c36;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+}

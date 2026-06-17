@@ -1,0 +1,175 @@
+* {
+  margin: 0px;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+body {
+  font-family: Montserrat;
+}
+
+button {
+  font-family: inter;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.layout {
+  display: flex;
+}
+
+.sidebar {
+  background-color: #66334D;
+  min-height: 100vh;
+  width: 24%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 64px;
+  position: relative;
+}
+
+.logo {
+  width: 20%;
+  position: fixed;
+}
+
+.content {
+  width: 76%;
+  padding: 44px;
+  background-color: white;
+}
+
+.back-button {
+  width: 3%;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 24px;
+  color: #333333;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.subtitle {
+    color: #995277;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-top: 40px;
+}
+
+.checkbox {
+  margin-right: 12px;
+}
+
+.white-button {
+  max-width: 300px;
+  max-height: 42px;
+  border: 1px #66334D solid;
+  color: #66334D;
+  padding: 0.7em 8.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.white-button:hover {
+  background-color: rgba(102, 51, 77, 0.3);
+}
+
+.purple-button {
+  max-width: 300px;
+  max-height: 42px;
+  background-color: rgb(102, 51, 77);
+  color: #f7f7f7;
+  border: none;
+  padding: 0.7em 8.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.purple-button:hover {
+  background-color: rgb(102, 51, 77, 0.8);
+}
+
+.btn-rosa{
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 16px;
+    width: 200px; 
+    max-height: 42px; 
+    background-color: rgb(235, 196, 216);
+    color:rgb(102, 51, 77);
+    white-space: nowrap;
+    border-radius: 8px;
+    border: none;
+    padding: 0.7em 1.0em;
+    justify-content: center;
+    align-items: center;    
+}
+
+.btn-rosa:hover {
+    opacity: 0.7;
+}
+
+.add-endereco {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 12px;  
+  gap: 16px;             
+}
+
+.texto-etapa{
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 16px;
+    color: #7E7E7E;
+    padding-bottom: 24px;
+}
+
+.linha {
+  height: 1px;
+  background-color: #EBC4D8;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
+
+.quantidade {
+  display: flex;
+  background-color: white;
+  width: 15%;
+  justify-content: space-between;
+  color: #66334D;
+  border: solid 1px #EBC4D8;
+  border-radius: 8px;
+  height: 36px;
+  padding: 8px 16px;
+}
+
+.botao-quantidade {
+  color: #995277;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.valor-quantidade {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}

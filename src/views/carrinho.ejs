@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Carrinho</title>
+  <link rel="stylesheet" href="/css/carrinho.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+
+<body>
+  <div class="top-header">
+    <a href="/tela-inicial">
+      <svg class="botao-voltar" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.6603 17C19.5596 18.9064 17.8606 20.3963 15.8268 21.2388C13.793 22.0812 11.5381 22.229 9.41174 21.6592C7.28541 21.0895 5.4065 19.834 4.06641 18.0876C2.72631 16.3411 2 14.2013 2 12C2 9.79864 2.72631 7.65884 4.06641 5.9124C5.4065 4.16596 7.28541 2.91049 9.41174 2.34074C11.5381 1.77099 13.793 1.9188 15.8268 2.76121C17.8606 3.60363 19.5596 5.09356 20.6603 6.99998M12.0002 7.99998L8.00024 12M8.00024 12L12.0002 16M8.00024 12H22.0002" stroke="#995277" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+  </div>
+
+  <div class="header">
+    <h1>Carrinho</h1>
+    <% if (itens.length > 0) { %>
+      <button class="botao-limpar-carrinho" onclick="limparCarrinho()">
+        Limpar carrinho
+      </button>
+    <% } %>
+  </div>
+
+  <div class="container">
+    <div class="itens-carrinho">
+
+      <% if (itens.length === 0) { %>
+        <p style="color: #999; font-size: 16px;">Seu carrinho está vazio.</p>
+      <% } %>
+
+      <% itens.forEach(item => { %>
+        <div class="card-roupa" id="item-<%= item.id_item %>">
+          <div class="cima">
+            <div class="imagem-e-info">
+              <img class="imagem" src="<%= item.url_imagem || '/img/image.png' %>" alt="<%= item.nome_produto %>">
+              <div class="info">
+                <div class="nome">
+                  <p><%= item.nome_produto %></p>
+                  <svg class="botoes" onclick="removerItem(<%= item.id_item %>)" style="cursor:pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 3H15M3 5.99303H21M19 5.99303L18.3 16.4886C18.3403 17.5001 18.17 18.5091 17.8 19.4517C17.4987 19.9758 17.0455 20.3966 16.5 20.6589C15.5339 20.9643 14.5147 21.0662 13.507 20.9582H10.489C9.48134 21.0662 8.46211 20.9643 7.49597 20.6589C6.95045 20.3966 6.49726 19.9758 6.19598 19.4517C5.82593 18.5091 5.65568 17.5001 5.69598 16.4886L5 5.99303" stroke="#995277" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="opcoes">
+                  <p class="texto">Tamanho: <strong><%= item.tamanho %></strong></p>
+                </div>
+                <div class="opcoes">
+                  <p class="texto">Cor: <strong><%= item.nome_cor %></strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="linha"></div>
+          <div class="baixo">
+            <div class="quantidade">
+              <div class="botao-quantidade" onclick="atualizarQuantidade(<%= item.id_item %>, <%= item.quantidade - 1 %>)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 12H20" stroke="#995277" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="valor-quantidade" id="qtd-<%= item.id_item %>">
+                <%= item.quantidade %>
+              </div>
+              <div class="botao-quantidade" onclick="atualizarQuantidade(<%= item.id_item %>, <%= item.quantidade + 1 %>)">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 1V17M1 9H17" stroke="#995277" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+            <div class="valor">
+              R$ <%= parseFloat(item.subtotal).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) %>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+
+      <a href="/produtos" class="link-tela-inicial">
+        Escolher mais produtos
+      </a>
+    </div>
+
+    <div class="secao-valor">
+      <div class="valor-carrinho">
+        <p class="titulo-valor-carrinho">Valor do carrinho</p>
+        <div class="secao-valor-carrinho">
+          <p>Subtotal (<%= itens.length %> <%= itens.length === 1 ? 'item' : 'itens' %>)</p>
+          <p>R$ <%= parseFloat(total).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) %></p>
+        </div>
+        <div class="linha"></div>
+        <div class="secao-valor-carrinho">
+          <p>Frete</p>
+          <p id="valor-frete">A ser calculado</p>
+        </div>
+        <div class="linha"></div>
+        <div class="secao-valor-carrinho">
+          <p>Valor total</p>
+          <p id="valor-total">R$ <%= parseFloat(total).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) %></p>
+        </div>
+        <button class="ir-pagamento-botao"  onclick="irParaPagamento()">
+          Ir para o pagamento
+        </button>
+      </div>
+
+      <div class="consultar-frete">
+        <p class="titulo-consultar-frete">Consultar frete</p>
+        <div class="consultar-frete-campos">
+          <input class="input-consultar-cep" id="cepEntrega" placeholder="Insira o CEP" maxlength="9">
+          <button onclick="consultarFrete()">Consultar frete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/carrinho.js">
+    
+  </script>
+</body>
+
+</html>

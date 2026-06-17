@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Listagem de pedidos | Nana Roupas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/table.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/mudanca-status.css">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body>
+
+  <div class="containers-tabelaNavbar">
+    <div class="navbar-container">
+      <%- include('navbar', { paginaAtiva: paginaAtiva }) %>
+    </div>
+
+    <div class="layout">
+      <div class="titulo-tabela">
+        <h1>Pedidos</h1>
+      </div>
+
+      <div class="containers-tabela">
+        <div class="containers-CCF">
+          <label class="input-com-icon">
+            <input id="input-pesquisar" class="input-pesquisar" type="text"
+              placeholder="Pesquisar pelo nº do pedido ou nome do cliente">
+            <svg id="btn-buscar" style="cursor:pointer" class="icon-pesquisar" width="20" height="20"
+              viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_526_615)">
+                <path d="M19 19L14.65 14.65M8.99999 4C10.3261 4 11.5978 4.5268 12.5355 5.46448C13.4732 6.40216 14 7.67392 14 9M17 9C17 10.5823 16.5308 12.129 15.6517 13.4446C14.7727 14.7602 13.5233 15.7855 12.0614 16.391C10.5996 16.9965 8.9911 17.155 7.43926 16.8463C5.88741 16.5376 4.46195 15.7757 3.34313 14.6569C2.22431 13.538 1.46241 12.1125 1.15373 10.5607C0.845053 9.00882 1.00343 7.40029 1.60893 5.93848C2.21443 4.47667 3.23981 3.22732 4.55541 2.34827C5.871 1.46922 7.41774 1 8.99999 1C11.1217 1 13.1566 1.84285 14.6568 3.34314C16.1571 4.84343 17 6.87827 17 9Z"
+                  stroke="#66334D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_526_615"><rect width="20" height="20" fill="white"/></clipPath>
+              </defs>
+            </svg>
+          </label>
+          <button id="btn-limpar" class="btn-limpar" style="display:none;">Limpar pesquisa</button>
+        </div>
+
+        <div class="layout-tabela">
+          <table class="tabela-clientes" id="tabelaPedidos">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Itens</th>
+                <th>Total (R$)</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (!pedidos || pedidos.length === 0) { %>
+                <tr>
+                  <td colspan="6" style="text-align:center; padding:32px; color:#7c6b71;">
+                    Nenhum pedido encontrado.
+                  </td>
+                </tr>
+              <% } else { %>
+                
+                <% pedidos.forEach(pedido => { %>
+                  <tr class="linha-pedido"
+                      data-id="<%= pedido.id_pedido %>"
+                      data-nome="<%= (pedido.nome_cliente || '').toLowerCase() %>">
+                    <td>#<%= pedido.id_pedido %></td>
+                    <td><%= pedido.nome_cliente || '—' %></td>
+                    <td><%= pedido.qtde_itens %></td>
+                    <td>R$ <%= parseFloat(pedido.valor_total).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) %></td>
+                    <td>
+                      <span class="badge-status badge-<%= pedido.status_pedido.toLowerCase().replace(/ /g, '-') %>">
+                        <%= pedido.status_pedido %>
+                      </span>
+                    </td>
+                    <td>
+                      <div class="acoes-pedido">
+                        <% if (pedido.status_pedido === 'Em processamento') { %>
+                          <button class="btn-acao btn-aprovar"
+                            onclick="abrirModal(<%= pedido.id_pedido %>, 'aprovar', '<%= pedido.nome_cliente %>')">
+                            Aprovar
+                          </button>
+                          <button class="btn-acao btn-reprovar"
+                            onclick="abrirModal(<%= pedido.id_pedido %>, 'reprovar', '<%= pedido.nome_cliente %>')">
+                            Reprovar
+                          </button>
+                        <% } else if (pedido.status_pedido === 'Aprovado') { %>
+                          <button class="btn-acao btn-despachar"
+                            onclick="abrirModal(<%= pedido.id_pedido %>, 'despachar', '<%= pedido.nome_cliente %>')">
+                            Despachar
+                          </button>
+                        <% } else if (pedido.status_pedido === 'Em trânsito') { %>
+                          <button class="btn-acao btn-entregar"
+                            onclick="abrirModal(<%= pedido.id_pedido %>, 'entregar', '<%= pedido.nome_cliente %>')">
+                            Confirmar entrega
+                          </button>
+                        <% } else { %>
+                          <span style="color:#aaa; font-size:12px;">—</span>
+                        <% } %>
+                      </div>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONFIRMAÇÃO -->
+  <div class="modal-backdrop-pedido" id="modalBackdrop">
+    <div class="modal-pedido">
+      <h3 id="modalTitulo">Confirmar ação</h3>
+      <p id="modalDescricao">Tem certeza?</p>
+      <div class="modal-pedido-footer">
+        <button class="btn-modal-cancel" id="btnModalCancelar">Cancelar</button>
+        <button class="btn-modal-confirm" id="btnModalConfirmar">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!--script src="/js/lista-pedidos.js"></script-->
+  <script>
+    // ── Pesquisa ──────────────────────────────────────────────────────
+    document.getElementById('input-pesquisar').addEventListener('input', function () {
+      const termo = this.value.trim().toLowerCase();
+      document.getElementById('btn-limpar').style.display = termo ? 'inline-block' : 'none';
+      document.querySelectorAll('.linha-pedido').forEach(row => {
+        const id   = row.dataset.id.toLowerCase();
+        const nome = row.dataset.nome.toLowerCase();
+        row.style.display = (id.includes(termo) || nome.includes(termo)) ? '' : 'none';
+      });
+    });
+    document.getElementById('btn-limpar').addEventListener('click', function () {
+      document.getElementById('input-pesquisar').value = '';
+      this.style.display = 'none';
+      document.querySelectorAll('.linha-pedido').forEach(r => r.style.display = '');
+    });
+
+    // ── Modal de confirmação ──────────────────────────────────────────
+    const TEXTOS = {
+      aprovar:   { titulo: 'Aprovar pedido',          desc: (id, nome) => `Aprovar o pedido #${id} de ${nome}? O cliente será notificado.`,                        classe: 'aprovar'   },
+      reprovar:  { titulo: 'Reprovar pedido',          desc: (id, nome) => `Reprovar o pedido #${id} de ${nome}? Um cupom de estorno será gerado para o cliente.`,  classe: 'reprovar'  },
+      despachar: { titulo: 'Despachar para entrega',   desc: (id, nome) => `Marcar o pedido #${id} de ${nome} como "Em trânsito"?`,                                 classe: 'despachar' },
+      entregar:  { titulo: 'Confirmar entrega',        desc: (id, nome) => `Confirmar que o pedido #${id} de ${nome} foi entregue?`,                                classe: 'entregar'  },
+    };
+
+    let acaoPendente = null;
+
+    function abrirModal(idPedido, acao, nomeCliente) {
+      const cfg = TEXTOS[acao];
+      document.getElementById('modalTitulo').textContent    = cfg.titulo;
+      document.getElementById('modalDescricao').textContent = cfg.desc(idPedido, nomeCliente);
+      const btnConfirmar = document.getElementById('btnModalConfirmar');
+      btnConfirmar.className = 'btn-modal-confirm ' + cfg.classe;
+      acaoPendente = { idPedido, acao };
+      document.getElementById('modalBackdrop').classList.add('aberto');
+    }
+
+    document.getElementById('btnModalCancelar').addEventListener('click', () => {
+      document.getElementById('modalBackdrop').classList.remove('aberto');
+      acaoPendente = null;
+    });
+    document.getElementById('modalBackdrop').addEventListener('click', e => {
+      if (e.target === e.currentTarget) {
+        document.getElementById('modalBackdrop').classList.remove('aberto');
+        acaoPendente = null;
+      }
+    });
+
+    document.getElementById('btnModalConfirmar').addEventListener('click', async () => {
+      if (!acaoPendente) return;
+      const { idPedido, acao } = acaoPendente;
+      const btn = document.getElementById('btnModalConfirmar');
+      btn.disabled = true;
+      btn.textContent = 'Aguarde...';
+
+      try {
+        const res  = await fetch(`/pedidos/${idPedido}/${acao}`, { method: 'POST', credentials: 'include' });
+        const data = await res.json();
+        document.getElementById('modalBackdrop').classList.remove('aberto');
+        acaoPendente = null;
+
+        Toastify({
+          text: data.mensagem,
+          duration: 3500,
+          gravity: 'top',
+          position: 'right',
+          style: { background: res.ok ? '#66334D' : '#c0392b' }
+        }).showToast();
+
+        if (res.ok) setTimeout(() => location.reload(), 1500);
+      } catch (err) {
+        Toastify({ text: 'Falha na conexão. Tente novamente.', duration: 3000, style: { background: '#c0392b' } }).showToast();
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Confirmar';
+      }
+    });
+  </script>
+</body>
+</html>

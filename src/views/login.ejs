@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Nana Roupas</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/formulario.css">
+  <style>
+
+  </style>
+</head>
+
+<body>
+
+  <div class="left">
+    <h1>LOGIN</h1>
+
+    <form action="/login" method="POST">
+      <label>E-mail</label>
+      <input type="email" name="email" placeholder="Insira seu e-mail" required>
+
+      <label>Senha</label>
+      <div class="senha-container">
+        <input type="password" name="senha" id="senha" placeholder="Insira a senha" required>
+        <div class="desocultar-senha" type="button" onclick="toggleSenha()">👁</div>
+        <!--button class="desocultar-senha" type="button" onclick="toggleSenha('senha')">👁</button-->
+      </div>
+
+
+      <button type="submit">Entrar</button>
+    </form>
+    <p>
+      Não tem uma conta? <a href="/cadastrar-cliente">Cadastre-se agora</a>
+    </p>
+  </div>
+
+  <div class="right">
+    <div class="logo">NANA Roupas</div>
+  </div>
+
+  <script>
+    function toggleSenha() {
+      const input = document.getElementById('senha');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    // Intercepta o envio do formulário
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); // Impede o recarregamento da página
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      try {
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.ok) {
+          // Se deu certo, redireciona para a rota enviada pelo servidor
+          window.location.href = result.redirect;
+        } else {
+          // Se deu erro (401, 400, etc), mostra o alerta
+          alert(result.erro || 'Erro ao realizar login.');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro de conexão com o servidor.');
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+body {
+  padding: 44px 60px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ranking {
+  display: flex;
+  align-items: center;
+}
+
+.ranking-title {
+  margin: 0;
+}
+
+.ranking-element {
+  background-color: #EBC4D8;
+  color: #66334D;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-left: 12px;
+}
+
+.grid-dados-do-perfil {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 16px;
+  row-gap: 16px;
+  margin-bottom: 44px;
+}
+
+.w33 {
+  grid-column: span 1;
+}
+
+.label-detalhes {
+  color: #7E7E7E;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.dado {
+  color: #333333;
+  font-size: 1rem;
+}
+
+.enderecos-cartoes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 44px;
+  height: 100%;
+  margin-bottom: 44px;
+}
+
+.grid-enderecos-cartoes {
+  display: grid;
+  row-gap: 8px;
+}
+
+.card {
+  background-color: rgba(235, 196, 216, 0.3);
+  font-size: 1rem;
+  padding: 12px 20px;
+  border-radius: 12px;
+  height: 100%;
+}
+
+.card-title {
+  color: #995277;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.card-info {
+  color: #7E7E7E;
+}
+
+.input-pesquisa {
+  width: 100%;
+  height: 42px;
+  border-radius: 8px;
+  border: #CACACA solid 1px;
+  background-color: #Fff;
+  font-family: Montserrat;
+  font-size: 16px;
+  padding: 8px 16px;
+  margin-bottom: 10px;
+}
+
+.tabela-transacoes {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabela-transacoes thead th {
+  text-align: left;
+  color: #7E7E7E;
+  font-weight: 500;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #CACACA;
+}
+
+.tabela-transacoes tbody td {
+  padding: 15px 0;
+  color: #292D32;
+  font-weight: 500;
+}
+
+.tabela-transacoes tbody tr {
+  border-bottom: 1px solid transparent;
+}
+
+.tabela-transacoes tbody tr:last-child {
+  border-bottom: 1px solid #CACACA;
+}

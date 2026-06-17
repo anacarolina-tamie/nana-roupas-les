@@ -1,0 +1,161 @@
+.acoes-pedido {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-acao {
+    padding: 5px 14px;
+    border-radius: 8px;
+    border: none;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: opacity .15s;
+}
+
+.btn-acao:hover {
+    opacity: .82;
+}
+
+.btn-acao:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.btn-aprovar {
+    background: #2d7a4f;
+    color: #fff;
+}
+
+.btn-reprovar {
+    background: #c0392b;
+    color: #fff;
+}
+
+.btn-despachar {
+    background: #1a6fa8;
+    color: #fff;
+}
+
+.btn-entregar {
+    background: #66334D;
+    color: #fff;
+}
+
+/* badges de status */
+.badge-status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-em-processamento {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.badge-aprovado {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.badge-em-trânsito,
+.badge-em-trансito {
+    background: #cfe2ff;
+    color: #084298;
+}
+
+.badge-entregue {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.badge-reprovado {
+    background: #f8d7da;
+    color: #842029;
+}
+
+/* modal de confirmação */
+.modal-backdrop-pedido {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-backdrop-pedido.aberto {
+    display: flex;
+}
+
+.modal-pedido {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 28px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, .18);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.modal-pedido h3 {
+    margin: 0 0 10px;
+    color: #3d1a2e;
+    font-size: 18px;
+}
+
+.modal-pedido p {
+    margin: 0 0 24px;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.modal-pedido-footer {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.btn-modal-cancel {
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: 1.5px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.btn-modal-confirm {
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.btn-modal-confirm.aprovar {
+    background: #2d7a4f;
+}
+
+.btn-modal-confirm.reprovar {
+    background: #c0392b;
+}
+
+.btn-modal-confirm.despachar {
+    background: #1a6fa8;
+}
+
+.btn-modal-confirm.entregar {
+    background: #66334D;
+}

@@ -1,0 +1,148 @@
+.inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 16px;
+  column-gap: 16px;
+  margin-bottom: 24px;
+}
+
+.label {
+  margin-bottom: 8px;
+  color: #505050;
+  font-size: 16px;
+}
+
+.input {
+  width: 100%;
+  height: 42px;
+  border-radius: 8px;
+  border: #CACACA solid 1px;
+  background-color: #F7F7F7;
+  font-family: Montserrat;
+  font-size: 16px;
+  padding: 8px 16px;
+}
+
+.dropdown {
+  width: 100%;
+  height: 42px;
+  border-radius: 8px;
+  border: #CACACA solid 1px;
+  background-color: #F7F7F7;
+  font-family: Montserrat;
+  font-size: 16px;
+  padding: 8px 16px;
+  appearance: none;
+}
+
+
+.w-100 {
+  grid-column: span 4;
+}
+
+.w-50 {
+  grid-column: span 2;
+  position: relative;
+}
+
+.w-25 {
+  grid-column: span 1;
+}
+
+.container-select {
+  position: relative;
+
+}
+
+.arrow {
+  position: absolute;
+  right: 16px;
+  width: 6%;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: transform 0.2s;
+}
+
+.desocultar-senha {
+  color: #66334d;
+  position: absolute;
+  right: 10px;
+  border: none;
+  background-color: #f7f7f7;
+  top: 45%;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.div-endereco-entrega {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#secao-entrega {
+  display: none;
+}
+
+.buttons {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 24px;
+}
+
+.erros {
+  color: red;
+  margin-top: 10px;
+}
+
+
+.enderecos-cartoes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 44px;
+  height: 100%;
+  margin-bottom: 44px;
+}
+
+.grid-enderecos-cartoes {
+  display: grid;
+  row-gap: 8px;
+}
+
+.card {
+  background-color: rgba(235, 196, 216, 0.3);
+  font-size: 1rem;
+  padding: 12px 20px;
+  border-radius: 12px;
+  height: 100%;
+}
+
+.card-title {
+  color: #995277;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.card-info {
+  color: #7E7E7E;
+}
+
+.conteudo-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.espacamento {
+  height: 20px;
+}
+
+#erros {
+  margin-bottom: 10px;
+}
+
+
+.icone {
+  cursor: pointer;
+}

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Favoritos | Nana Roupas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar-horizontal.css">
+    <link rel="stylesheet" href="/css/cards.css">
+    <link rel="stylesheet" href="/css/tela-inicial.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/table.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+
+    <style>
+        .favoritos-vazio {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .favoritos-vazio svg {
+            opacity: 0.3;
+        }
+
+        .favoritos-vazio p {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .favoritos-vazio a button {
+            margin-top: 8px;
+            background: #66334D;
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .favoritos-vazio a button:hover {
+            background: #7a3d5c;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="navbar-container">
+            <%- include('navbar-horizontal') %>
+        </div>
+
+        <div class="layout">
+            <div class="titulo-tabela">
+                <h1>Favoritos</h1>
+                <!--div class="containers-CCF">
+                    <label class="input-com-icon">
+                        <input id="input-pesquisar" class="input-pesquisar" type="text"
+                            placeholder="Pesquisar produto pelo nome">
+                        <svg id="btn-buscar" style="cursor: pointer;" class="icon-pesquisar" width="20" height="20"
+                            viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_526_615)">
+                                <path
+                                    d="M19 19L14.65 14.65M8.99999 4C10.3261 4 11.5978 4.5268 12.5355 5.46448C13.4732 6.40216 14 7.67392 14 9M17 9C17 10.5823 16.5308 12.129 15.6517 13.4446C14.7727 14.7602 13.5233 15.7855 12.0614 16.391C10.5996 16.9965 8.9911 17.155 7.43926 16.8463C5.88741 16.5376 4.46195 15.7757 3.34313 14.6569C2.22431 13.538 1.46241 12.1125 1.15373 10.5607C0.845053 9.00882 1.00343 7.40029 1.60893 5.93848C2.21443 4.47667 3.23981 3.22732 4.55541 2.34827C5.871 1.46922 7.41774 1 8.99999 1C11.1217 1 13.1566 1.84285 14.6568 3.34314C16.1571 4.84343 17 6.87827 17 9Z"
+                                    stroke="#66334D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_526_615">
+                                    <rect width="20" height="20" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </label>
+                    <button id="btn-limpar" class="btn-limpar" style="display: none;">Limpar pesquisa</button>
+                </div-->
+            </div>
+
+            <div class="container">
+                <% if (produtos && produtos.length> 0) { %>
+                    <div class="cards">
+                        <% produtos.forEach(produto=> { %>
+                            <div class="card-roupa">
+                                <div class="imagem">
+                                    <img class="imagem" src="<%= produto.url_imagem %>"
+                                        alt="<%= produto.nome_produto %>">
+                                </div>
+                                <div class="card-info">
+                                    <div class="nome-favorito">
+                                        <p>
+                                            <%= produto.nome_produto %>
+                                        </p>
+
+                                        <!-- Coração sempre preenchido (já é favorito) -->
+                                        <svg class="btn-favorito" data-id="<%= produto.id_produto %>" width="24"
+                                            height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                            stroke="#66334D" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" style="cursor:pointer; transition: transform .2s;">
+                                            <path
+                                                d="M19.92 11.9401L18.44 13.4201L12.07 19.7901C12.04 19.8201 12.03 19.8301 12 19.8501C11.97 19.8301 11.96 19.8201 11.93 19.7901L4.08 11.9401C3.19 11.0501 2.75 9.89009 2.75 8.72009C2.75 7.55009 3.19 6.3801 4.08 5.4901C5.86 3.7201 8.74 3.7201 10.52 5.4901L11.99 6.97009L13.47 5.4901C15.25 3.7201 18.12 3.7201 19.9 5.4901C20.81 6.3801 21.25 7.54009 21.25 8.72009C21.25 9.88009 20.81 11.0501 19.92 11.9401Z"
+                                                fill="#66334D" />
+                                        </svg>
+                                    </div>
+
+                                    <div class="preco">
+                                        R$ <%= parseFloat(produto.valor_produto).toLocaleString('pt-BR', {
+                                            minimumFractionDigits: 2 }) %>
+                                    </div>
+
+                                    <% if (parseInt(produto.estoque_total)===0) { %>
+                                        <p
+                                            style="color: #E8485A; font-size: 12px; font-weight: 600; margin-bottom: 4px;">
+                                            Indisponível
+                                        </p>
+                                        <% } %>
+
+                                            <a href="/produtos/<%= produto.id_produto %>">
+                                                <button>Ver detalhes</button>
+                                            </a>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+
+                    <% } else { %>
+                        <div class="favoritos-vazio">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#66334D"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M19.92 11.9401L18.44 13.4201L12.07 19.7901C12.04 19.8201 12.03 19.8301 12 19.8501C11.97 19.8301 11.96 19.8201 11.93 19.7901L4.08 11.9401C3.19 11.0501 2.75 9.89009 2.75 8.72009C2.75 7.55009 3.19 6.3801 4.08 5.4901C5.86 3.7201 8.74 3.7201 10.52 5.4901L11.99 6.97009L13.47 5.4901C15.25 3.7201 18.12 3.7201 19.9 5.4901C20.81 6.3801 21.25 7.54009 21.25 8.72009C21.25 9.88009 20.81 11.0501 19.92 11.9401Z" />
+                            </svg>
+                            <p>Você ainda não tem produtos favoritos.</p>
+                            <a href="/tela-inicial">
+                                <button>Explorar produtos</button>
+                            </a>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ── Pesquisa ── 
+        const inputPesquisar = document.getElementById('input-pesquisar');
+        const btnLimpar = document.getElementById('btn-limpar');
+
+
+        document.getElementById('btn-buscar').addEventListener('click', () => {
+            const termo = inputPesquisar.value.trim();
+            if (termo) window.location.href = `/produtos?busca=${encodeURIComponent(termo)}`;
+        });
+
+        inputPesquisar.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const termo = inputPesquisar.value.trim();
+                if (termo) window.location.href = `/produtos?busca=${encodeURIComponent(termo)}`;
+            }
+        });
+
+        inputPesquisar.addEventListener('input', () => {
+            btnLimpar.style.display = inputPesquisar.value ? 'block' : 'none';
+        });
+
+        btnLimpar.addEventListener('click', () => {
+            inputPesquisar.value = '';
+            btnLimpar.style.display = 'none';
+            window.location.href = '/produtos';
+        });*/
+
+        // Ao desfavoritar nesta página, remove o card da tela
+        document.querySelectorAll('.btn-favorito').forEach(svg => {
+            svg.addEventListener('click', async () => {
+                const idProduto = svg.dataset.id;
+
+                try {
+                    const res = await fetch('/favoritos/toggle', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ produto_id: idProduto })
+                    });
+                    const data = await res.json();
+
+                    // Se desfavoritou, remove o card da tela
+                    if (!data.favoritado) {
+                        const card = svg.closest('.card-roupa');
+                        card.style.transition = 'opacity 0.3s, transform 0.3s';
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            card.remove();
+
+                            // Se não sobrou nenhum card, mostra mensagem de vazio
+                            const cards = document.querySelectorAll('.card-roupa');
+                            if (cards.length === 0) location.reload();
+                        }, 300);
+                    }
+                } catch (err) {
+                    console.error('Erro ao desfavoritar:', err);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

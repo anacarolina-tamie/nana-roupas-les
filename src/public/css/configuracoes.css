@@ -1,0 +1,272 @@
+.body {
+  display: flex;
+}
+
+.sidebar-configuracoes {
+  background-color: rgb(235, 196, 216, 0.2);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 20vw;
+  padding: 40px 30px;
+  z-index: 50;
+  top: 0;
+  padding-top: 160px;
+}
+
+.container-configuracoes {
+  display: flex;
+  position: relative;
+}
+
+.conteudo-configuracoes {
+  margin-left: 20vw;
+  padding: 20px 30px;
+  width: 100%;
+  display: flex;
+}
+
+.grid-dados-do-perfil {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 10px;
+}
+
+.div-titulo-sidebar {
+  display: flex;
+  color: #66334D;
+  font-weight: 500;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.div-titulo-sidebar svg {
+  cursor: pointer;
+}
+
+.label {
+  color: #7E7E7E;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.campo {
+  font-size: 16px;
+}
+
+.botao-alterar-senha {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 16px;
+  max-height: 42px;
+  background-color: rgb(235, 196, 216);
+  color: rgb(102, 51, 77);
+  white-space: nowrap;
+  border-radius: 8px;
+  border: none;
+  padding: 0.7em 1.0em;
+  justify-content: center;
+  align-items: center;
+}
+
+.div-botoes {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.div-botoes button {
+  margin-bottom: 16px;
+}
+
+.div-secao-conteudo {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.card {
+  background-color: rgba(235, 196, 216, 0.3);
+  font-size: 1rem;
+  padding: 12px 20px;
+  border-radius: 12px;
+  height: 100%;
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  color: #995277;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.card-info {
+  color: #7E7E7E;
+}
+
+.conteudo-titulo {
+  color: #66334D;
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: 16px;
+}
+
+.card-conteudo {
+  display: flex;
+  align-items: center;
+}
+
+.card-conteudo svg {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.card-row-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tag-cartao-principal {
+  background-color: rgb(235, 196, 216);
+  /* mesmo rosa do seu botao-alterar-senha */
+  color: rgb(102, 51, 77);
+  /* mesmo rosa escuro */
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 20px;
+  /* bem arredondado para virar pill */
+}
+
+.definir-preferencial {
+  text-decoration: underline;
+  font-size: 13px;
+  color: rgb(102, 51, 77);
+  background-color: transparent;
+  border: none;
+  font-family: montserrat;
+}
+
+.div-cupons {
+  margin-left: 40px;
+}
+
+.carregando {
+  color: #999;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.vazio {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.botao-adicionar {
+  margin-top: 12px;
+  background: none;
+  border: 1.5px dashed #995277;
+  color: #995277;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+.botao-adicionar:hover {
+  background: #f9f0f5;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.modal-box p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+.modal-botoes {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.botao-cancelar-modal {
+  padding: 10px 24px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  color: #666;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.botao-confirmar-modal {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  background: #66334D;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.botao-confirmar-modal:hover {
+  background: #7a3d5e;
+}
+
+.tag-status {
+  font-size: 0.75rem;
+  font-family: 'Montserrat', sans-serif;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.tag-disponivel {
+  background: #f0f9f0;
+  color: #2e7d32;
+}
+
+.tag-usado {
+  background: #f5f5f5;
+  color: #999;
+}

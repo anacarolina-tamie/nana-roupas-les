@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <title>Finalizar Pedido | Nana Roupas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/detalhes-cliente.css">
+    <link rel="stylesheet" href="/css/finalizar-compra.css">
+    <link rel="stylesheet" href="/css/formulario.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+</head>
+
+<body>
+    <a href="/carrinho" id="btnVoltar">
+        <svg class="back-button" viewBox="0 0 44 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30.6603 17C29.5596 18.9064 27.8606 20.3963 25.8268 21.2388C23.793 22.0812 21.5381 22.229 19.4117 21.6592C17.2854 21.0895 15.4065 19.834 14.0664 18.0876C12.7263 16.3411 12 14.2013 12 12C12 9.79864 12.7263 7.65884 14.0664 5.9124C15.4065 4.16596 17.2854 2.91049 19.4117 2.34074C21.5381 1.77099 23.793 1.9188 25.8268 2.76121C27.8606 3.60363 29.5596 5.09356 30.6603 6.99998M22.0002 7.99998L18.0002 12M18.0002 12L22.0002 16M18.0002 12H32.0002" stroke="#995277" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </a>
+
+    <main>
+        <h1>Pagamento</h1>
+
+        <!-- ── COLUNA ESQUERDA ── -->
+        <div class="left-col">
+
+            <!-- ENDEREÇOS -->
+            <div class="section-card">
+                <div class="section-header">
+                    <span class="section-title">Escolher endereço de entrega</span>
+                    <button class="link-action" id="btnAddAddress">+ Adicionar outro endereço</button>
+                </div>
+                <div class="address-list" id="addressList">
+                    <div class="skeleton skeleton-line" style="width:100%;height:80px;border-radius:12px;"></div>
+                    <div class="skeleton skeleton-line" style="width:100%;height:80px;border-radius:12px;"></div>
+                </div>
+            </div>
+
+            <!-- FORMAS DE PAGAMENTO -->
+            <div class="section-card">
+                <div class="section-header">
+                    <span class="section-title">Formas de pagamento</span>
+                </div>
+
+                <!-- ── CUPOM ── -->
+                <div class="coupon-section">
+                    <div class="coupon-header">
+                        <label class="coupon-label" for="inputCupom">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+                                <line x1="7" y1="7" x2="7.01" y2="7"/>
+                            </svg>
+                            Cupom de desconto
+                        </label>
+                    </div>
+
+                    <!-- Input + botão aplicar -->
+                    <div class="coupon-input-row">
+                        <input
+                            class="input coupon-input"
+                            id="inputCupom"
+                            type="text"
+                            placeholder="Insira o código do cupom"
+                            maxlength="50"
+                            autocomplete="off"
+                            style="text-transform: uppercase;"
+                        />
+                        <button id="btnAplicarCupom" class="btn btn-secondary coupon-btn">
+                            Aplicar
+                        </button>
+                    </div>
+
+                    <!-- Status do cupom aplicado (oculto por padrão) -->
+                    <div id="cupomStatus" class="cupom-status" style="display:none;"></div>
+
+                    <!-- Botão remover cupom (oculto por padrão) -->
+                    <button id="btnRemoverCupom" class="link-action cupom-remove" style="display:none;">
+                        ✕ Remover cupom
+                    </button>
+                </div>
+
+                <hr class="divider">
+
+                <!-- ── CARTÃO 1 ── -->
+                <div class="card-section-header">
+                    <span class="card-section-title">
+                        Cartão de crédito
+                        <span class="card-count-badge" id="cardCount">0</span>
+                    </span>
+                    <button class="link-action" id="btnAddCard">+ Adicionar cartão</button>
+                </div>
+
+                <div class="card-list" id="cardList">
+                    <div class="skeleton skeleton-line" style="width:100%;height:64px;border-radius:12px;"></div>
+                    <div class="skeleton skeleton-line" style="width:100%;height:64px;border-radius:12px;"></div>
+                </div>
+
+                <!-- ── CHECKBOX 2 CARTÕES ── -->
+                <div class="multi-card-row" id="doisCartoesRow" style="display:none; margin-top: 16px;">
+                    <div class="checkbox-custom" id="checkDoisCartoes" role="checkbox" aria-checked="false" tabindex="0">
+                        <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5">
+                            <polyline points="1.5 6 4.5 9 10.5 3"/>
+                        </svg>
+                    </div>
+                    <span class="multi-card-label" id="labelDoisCartoes">Usar dois cartões</span>
+                </div>
+
+                <!-- ── CAMPO VALOR CARTÃO 1 ── -->
+                <div id="valorCartao1Section" style="display:none; margin-top: 16px;">
+                    <div class="valor-cartao-row">
+                        <label class="valor-cartao-label" for="inputValorCartao1">
+                            Valor no Cartão 1 (O restante será cobrado no Cartão 2)
+                        </label>
+                        <div class="valor-cartao-input-wrapper">
+                            <input
+                                type="number"
+                                id="inputValorCartao1"
+                                class="input valor-cartao-input"
+                                placeholder="0,00"
+                                min="0.01"
+                                step="0.01"
+                            />
+                        </div>
+                        <span id="avisoValorCartao1" style="color: red; font-size: 0.8rem;"></span>
+                        <p class="valor-cartao-hint" id="hintValorCartao1">.</p>
+                    </div>
+                </div>
+
+                <!-- ── CARTÃO 2 ── -->
+                <div id="card2Section" style="display:none; margin-top: 20px;">
+                    <div class="card-section-header">
+                        <span class="card-section-title">Cartão 2</span>
+                    </div>
+                    <div class="card-list" id="cardList2"></div>
+                </div>
+
+            </div>
+
+        </div><!-- /left-col -->
+
+        <!-- ── COLUNA DIREITA (RESUMO) ── -->
+        <div class="summary-col">
+            <div class="summary-card">
+                <p class="summary-title">Resumo do pagamento</p>
+                <div class="summary-rows">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span class="val" id="sumSubtotal">R$ —</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Frete (R$):</span>
+                        <span class="val" id="sumFrete">R$ —</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Desconto (cupom):</span>
+                        <span class="val" id="sumDesconto" style="color:var(--rose)">—</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total (R$):</span>
+                        <span class="val" id="sumTotal">R$ —</span>
+                    </div>
+                </div>
+
+                <!-- Divisão por cartão (só aparece com 2 cartões) -->
+                <div id="sumCartoesDiv" style="display:none; margin-top: 12px; border-top: 1px solid var(--line); padding-top: 12px;"></div>
+
+                <button class="btn-pay" id="btnPay" disabled>Finalizar compra</button>
+
+                <p class="pay-note">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" />
+                        <path d="M7 11V7a5 5 0 0110 0v4" />
+                    </svg>
+                    Pagamento seguro &amp; criptografado
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL -->
+    <div class="modal-backdrop" id="modalBackdrop">
+        <div class="modal">
+            <h2 id="modalTitle">Em breve</h2>
+            <p id="modalBody" style="white-space: pre-line;">Esta funcionalidade será integrada em breve.</p>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="btnModalClose">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast"></div>
+
+    <script>
+        const ID_CLIENTE = <%= clienteId %>;
+    </script>
+    <script src="/js/finalizar-pedido.js"></script>
+</body>
+
+</html>

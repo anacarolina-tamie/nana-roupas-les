@@ -1,0 +1,66 @@
+/* ── Badges de estoque ───────────────────────────────────────────────── */
+.badge-estoque {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-ok     { background: #EAF3DE; color: #27500A; }
+.badge-baixo  { background: #FAEEDA; color: #633806; }
+.badge-zerado { background: #FCEBEB; color: #791F1F; }
+
+/* ── Bolinha de cor ──────────────────────────────────────────────────── */
+.cor-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+.cor-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+/* ── Tag de tamanho ──────────────────────────────────────────────────── */
+.tag-tamanho {
+  display: inline-block;
+  background: #f3f0f1;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #66334D;
+  letter-spacing: 0.04em;
+}
+
+/* ── Célula de produto ───────────────────────────────────────────────── */
+.produto-cell {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.produto-thumb {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+  background: #f3f0f1;
+}
+.produto-thumb-vazio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Célula vazia ────────────────────────────────────────────────────── */
+.td-vazio {
+  text-align: center;
+  padding: 32px;
+  color: #7c6b71;
+}

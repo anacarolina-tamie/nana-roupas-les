@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tela inicial | Nana Roupas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar-horizontal.css">
+    <link rel="stylesheet" href="/css/cards.css">
+    <link rel="stylesheet" href="/css/tela-inicial.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/table.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <style>
+        /* ── Cards de produto no chat ── */
+        .chat-produtos-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .chat-produto-card {
+            background: #fff;
+            border: 1px solid #F0E0E8;
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .chat-produto-card .cp-nome {
+            font-size: 12px;
+            font-weight: 600;
+            color: #3a1f2d;
+        }
+
+        .chat-produto-card .cp-preco {
+            font-size: 13px;
+            font-weight: 700;
+            color: #66334D;
+        }
+
+        .chat-produto-card .cp-variacoes {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .chat-produto-card .cp-link {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #66334D;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chat-produto-card .cp-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ── Chat Widget ── */
+        #chat-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+        }
+
+        /* Janela do chat */
+        #chat-box {
+            width: 340px;
+            height: 460px;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(102, 51, 77, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform-origin: bottom right;
+            transform: scale(0.85) translateY(16px);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.22s ease;
+        }
+
+        #chat-box.aberto {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Header */
+        #chat-header {
+            background: #66334D;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        #chat-header .avatar {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        #chat-header .avatar svg {
+            width: 20px;
+            height: 20px;
+            stroke: #fff;
+        }
+
+        #chat-header .info {
+            flex: 1;
+        }
+
+        #chat-header .info .nome {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        #chat-header .info .status {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 2px;
+        }
+
+        #chat-header .info .status::before {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: #7EE8A2;
+            border-radius: 50%;
+        }
+
+        #btn-fechar-chat {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+        }
+
+        #btn-fechar-chat:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        #btn-fechar-chat svg {
+            width: 18px;
+            height: 18px;
+            stroke: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Mensagens */
+        #chat-mensagens {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #FAF6F8;
+        }
+
+        #chat-mensagens::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #chat-mensagens::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #chat-mensagens::-webkit-scrollbar-thumb {
+            background: #DCC8D2;
+            border-radius: 4px;
+        }
+
+        .msg {
+            max-width: 80%;
+            padding: 9px 13px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .msg.recebida {
+            background: #fff;
+            color: #3a1f2d;
+            border: 1px solid #F0E0E8;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .msg.enviada {
+            background: #66334D;
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .msg-hora {
+            font-size: 10px;
+            color: #aaa;
+            margin-top: 2px;
+        }
+
+        .msg-grupo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msg-grupo.enviada {
+            align-items: flex-end;
+        }
+
+        .msg-grupo.recebida {
+            align-items: flex-start;
+        }
+
+        /* Digitando */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 10px 13px;
+            background: #fff;
+            border: 1px solid #F0E0E8;
+            border-radius: 14px;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            width: fit-content;
+        }
+
+        .typing-indicator span {
+            width: 6px;
+            height: 6px;
+            background: #C49AB0;
+            border-radius: 50%;
+            animation: bounce 1.2s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Input area */
+        #chat-input-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 14px;
+            background: #fff;
+            border-top: 1px solid #F0E0E8;
+            flex-shrink: 0;
+        }
+
+        #chat-input {
+            flex: 1;
+            border: 1.5px solid #E8D5DF;
+            border-radius: 22px;
+            padding: 9px 14px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            color: #3a1f2d;
+            background: #FAF6F8;
+            outline: none;
+            transition: border-color 0.2s;
+            resize: none;
+        }
+
+        #chat-input:focus {
+            border-color: #66334D;
+        }
+
+        #chat-input::placeholder {
+            color: #C4A8B7;
+        }
+
+        #btn-enviar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #66334D;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        #btn-enviar:hover {
+            background: #7a3d5c;
+        }
+
+        #btn-enviar:active {
+            transform: scale(0.92);
+        }
+
+        #btn-enviar svg {
+            width: 17px;
+            height: 17px;
+            stroke: #fff;
+            margin-left: 2px;
+        }
+
+        /* Botão flutuante */
+        #btn-chat-toggle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #66334D;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(102, 51, 77, 0.35);
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        #btn-chat-toggle:hover {
+            background: #7a3d5c;
+            transform: scale(1.07);
+            box-shadow: 0 6px 20px rgba(102, 51, 77, 0.42);
+        }
+
+        #btn-chat-toggle:active {
+            transform: scale(0.95);
+        }
+
+        #btn-chat-toggle .icon-chat,
+        #btn-chat-toggle .icon-fechar {
+            position: absolute;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        #btn-chat-toggle .icon-chat {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        #btn-chat-toggle .icon-fechar {
+            opacity: 0;
+            transform: scale(0.6) rotate(-30deg);
+        }
+
+        #btn-chat-toggle.aberto .icon-chat {
+            opacity: 0;
+            transform: scale(0.6) rotate(30deg);
+        }
+
+        #btn-chat-toggle.aberto .icon-fechar {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        /* Bolinha de notificação */
+        #chat-notif {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 12px;
+            height: 12px;
+            background: #E8485A;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        #chat-notif.escondido {
+            transform: scale(0);
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="navbar-container">
+            <%- include('navbar-horizontal') %>
+        </div>
+
+        <div class="layout">
+            <div class="titulo-tabela">
+                <h1>Produtos</h1>
+                <div class="containers-CCF">
+                    <label class="input-com-icon">
+                        <input id="input-pesquisar" class="input-pesquisar" type="text"
+                            placeholder="Pesquisar produto pelo nome">
+                        <svg id="btn-buscar" style="cursor: pointer;" class="icon-pesquisar" width="20" height="20"
+                            viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_526_615)">
+                                <path
+                                    d="M19 19L14.65 14.65M8.99999 4C10.3261 4 11.5978 4.5268 12.5355 5.46448C13.4732 6.40216 14 7.67392 14 9M17 9C17 10.5823 16.5308 12.129 15.6517 13.4446C14.7727 14.7602 13.5233 15.7855 12.0614 16.391C10.5996 16.9965 8.9911 17.155 7.43926 16.8463C5.88741 16.5376 4.46195 15.7757 3.34313 14.6569C2.22431 13.538 1.46241 12.1125 1.15373 10.5607C0.845053 9.00882 1.00343 7.40029 1.60893 5.93848C2.21443 4.47667 3.23981 3.22732 4.55541 2.34827C5.871 1.46922 7.41774 1 8.99999 1C11.1217 1 13.1566 1.84285 14.6568 3.34314C16.1571 4.84343 17 6.87827 17 9Z"
+                                    stroke="#66334D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_526_615">
+                                    <rect width="20" height="20" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </label>
+                    <button id="btn-limpar" class="btn-limpar" style="display: none;">Limpar pesquisa</button>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="titulo">
+                    <h1>ESTOQUE DISPONÍVEL</h1>
+                    <div class="linha-tela-inicial"></div>
+                </div>
+
+                <div class="cards">
+                    <% if (produtos && produtos.length> 0) { %>
+                        <% produtos.forEach(produto=> { %>
+                            <div class="card-roupa">
+                                <div class="imagem">
+                                    <img class="imagem" src="<%= produto.url_imagem %>"
+                                        alt="<%= produto.nome_produto %>">
+                                </div>
+                                <div class="card-info">
+                                    <div class="nome-favorito">
+                                        <p>
+                                            <%= produto.nome_produto %>
+                                        </p>
+                                        <svg class="btn-favorito" data-id="<%= produto.id_produto %>" width="24"
+                                            height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                            stroke="#66334D" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" style="cursor:pointer; transition: transform .2s;">
+                                            <path
+                                                d="M19.92 11.9401L18.44 13.4201L12.07 19.7901C12.04 19.8201 12.03 19.8301 12 19.8501C11.97 19.8301 11.96 19.8201 11.93 19.7901L4.08 11.9401C3.19 11.0501 2.75 9.89009 2.75 8.72009C2.75 7.55009 3.19 6.3801 4.08 5.4901C5.86 3.7201 8.74 3.7201 10.52 5.4901L11.99 6.97009L13.47 5.4901C15.25 3.7201 18.12 3.7201 19.9 5.4901C20.81 6.3801 21.25 7.54009 21.25 8.72009C21.25 9.88009 20.81 11.0501 19.92 11.9401Z"
+                                                fill="<%= (typeof idsFavoritos !== 'undefined' && idsFavoritos.includes(produto.id_produto)) ? '#66334D' : 'none' %>" />
+                                        </svg>
+                                    </div>
+                                    <div class="preco">
+                                        R$ <%= parseFloat(produto.valor_produto).toLocaleString('pt-BR', {
+                                            minimumFractionDigits: 2 }) %>
+                                    </div>
+                                    <% if (parseInt(produto.estoque_total)===0) { %>
+                                        <p
+                                            style="color: #E8485A; font-size: 12px; font-weight: 600; margin-bottom: 4px;">
+                                            Indisponível</p>
+                                        <% } %>
+                                            <a href="/produtos/<%= produto.id_produto %>">
+                                                <button>Ver detalhes</button>
+                                            </a>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <p style="color: #999; grid-column: 1 / -1;">Nenhum produto encontrado.</p>
+                                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Chat Widget ── -->
+    <div id="chat-widget">
+        <!-- Janela do chat -->
+        <div id="chat-box" role="dialog" aria-label="Chat de atendimento">
+            <div id="chat-header">
+                <div class="avatar">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </div>
+                <div class="info">
+                    <div class="nome">Nana Roupas</div>
+                    <div class="status">Online agora</div>
+                </div>
+                <button id="btn-fechar-chat" aria-label="Fechar chat">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div id="chat-mensagens">
+                <div class="msg-grupo recebida">
+                    <div class="msg recebida">Olá! 👋 Bem-vinda à Nana Roupas. Como posso te ajudar hoje?</div>
+                    <span class="msg-hora">agora</span>
+                </div>
+            </div>
+
+            <div id="chat-input-area">
+                <input id="chat-input" type="text" placeholder="Digite sua mensagem..." autocomplete="off"
+                    aria-label="Mensagem">
+                <button id="btn-enviar" aria-label="Enviar mensagem">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Botão flutuante -->
+        <button id="btn-chat-toggle" aria-label="Abrir chat">
+            <span class="icon-chat">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+            </span>
+            <span class="icon-fechar">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+            </span>
+            <span id="chat-notif" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <script>
+        /* ── Pesquisa ── */
+        const inputPesquisar = document.getElementById('input-pesquisar');
+        const btnLimpar = document.getElementById('btn-limpar');
+
+
+        document.getElementById('btn-buscar').addEventListener('click', () => {
+            const termo = inputPesquisar.value.trim();
+            if (termo) window.location.href = `/produtos?busca=${encodeURIComponent(termo)}`;
+        });
+
+        // ── Favoritos ──
+        document.querySelectorAll('.btn-favorito').forEach(svg => {
+            svg.addEventListener('click', async () => {
+                const idProduto = svg.dataset.id;
+                const path = svg.querySelector('path');
+
+                try {
+                    const res = await fetch('/favoritos/toggle', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ produto_id: idProduto })
+                    });
+                    const data = await res.json();
+
+                    if (data.favoritado) {
+                        path.setAttribute('fill', '#66334D');
+                        svg.style.transform = 'scale(1.25)';
+                        setTimeout(() => svg.style.transform = 'scale(1)', 250);
+                    } else {
+                        path.setAttribute('fill', 'none');
+                    }
+                } catch (err) {
+                    console.error('Erro ao favoritar:', err);
+                }
+            });
+        });
+
+        inputPesquisar.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const termo = inputPesquisar.value.trim();
+                if (termo) window.location.href = `/produtos?busca=${encodeURIComponent(termo)}`;
+            }
+        });
+
+        inputPesquisar.addEventListener('input', () => {
+            btnLimpar.style.display = inputPesquisar.value ? 'block' : 'none';
+        });
+
+        btnLimpar.addEventListener('click', () => {
+            inputPesquisar.value = '';
+            btnLimpar.style.display = 'none';
+            window.location.href = '/produtos';
+        });
+
+        /* ── Chat Widget ── */
+        const chatBox = document.getElementById('chat-box');
+        const btnToggle = document.getElementById('btn-chat-toggle');
+        const btnFechar = document.getElementById('btn-fechar-chat');
+        const chatMensagens = document.getElementById('chat-mensagens');
+        const chatInput = document.getElementById('chat-input');
+        const btnEnviar = document.getElementById('btn-enviar');
+        const chatNotif = document.getElementById('chat-notif');
+
+        let aberto = false;
+
+        const EXPIRACAO_HORAS = 4;
+
+        function salvarHistorico() {
+            const dados = {
+                historico,
+                expira: Date.now() + EXPIRACAO_HORAS * 60 * 60 * 1000
+            };
+            localStorage.setItem('chat-nana', JSON.stringify(dados));
+        }
+
+        function carregarHistorico() {
+            const salvo = JSON.parse(localStorage.getItem('chat-nana') || 'null');
+            if (!salvo || Date.now() > salvo.expira) {
+                localStorage.removeItem('chat-nana');
+                return [];
+            }
+            return salvo.historico;
+        }
+
+        let historico = carregarHistorico();
+
+        function abrirChat() {
+            aberto = true;
+            chatBox.classList.add('aberto');
+            btnToggle.classList.add('aberto');
+            btnToggle.setAttribute('aria-label', 'Fechar chat');
+            chatNotif.classList.add('escondido');
+            chatInput.focus();
+        }
+
+        function fecharChat() {
+            aberto = false;
+            chatBox.classList.remove('aberto');
+            btnToggle.classList.remove('aberto');
+            btnToggle.setAttribute('aria-label', 'Abrir chat');
+        }
+
+        btnToggle.addEventListener('click', () => aberto ? fecharChat() : abrirChat());
+        btnFechar.addEventListener('click', fecharChat);
+
+        function horaAtual() {
+            return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function adicionarMensagem(texto, tipo) {
+            const grupo = document.createElement('div');
+            grupo.className = `msg-grupo ${tipo}`;
+
+            const msg = document.createElement('div');
+            msg.className = `msg ${tipo}`;
+            msg.textContent = texto;
+
+            const hora = document.createElement('span');
+            hora.className = 'msg-hora';
+            hora.textContent = horaAtual();
+
+            grupo.appendChild(msg);
+            grupo.appendChild(hora);
+            chatMensagens.appendChild(grupo);
+            chatMensagens.scrollTop = chatMensagens.scrollHeight;
+        }
+
+        function adicionarCards(mensagemTexto, produtos) {
+            const grupo = document.createElement('div');
+            grupo.className = 'msg-grupo recebida';
+
+            // Bolinha de texto introdutório
+            const msg = document.createElement('div');
+            msg.className = 'msg recebida';
+            msg.textContent = mensagemTexto;
+            grupo.appendChild(msg);
+
+            // Grid de cards
+            if (produtos && produtos.length > 0) {
+                const grid = document.createElement('div');
+                grid.className = 'chat-produtos-grid';
+
+                produtos.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = 'chat-produto-card';
+                    card.innerHTML = `
+                <span class="cp-nome">${p.nome}</span>
+                <span class="cp-preco">R$ ${parseFloat(p.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                <span class="cp-variacoes">${p.variacoes}</span>
+                <a class="cp-link" href="/produtos/${p.id}">Ver produto →</a>
+            `;
+                    grid.appendChild(card);
+                });
+
+                grupo.appendChild(grid);
+            }
+
+            const hora = document.createElement('span');
+            hora.className = 'msg-hora';
+            hora.textContent = horaAtual();
+            grupo.appendChild(hora);
+
+            chatMensagens.appendChild(grupo);
+            chatMensagens.scrollTop = chatMensagens.scrollHeight;
+        }
+
+        function mostrarDigitando() {
+            const typing = document.createElement('div');
+            typing.className = 'typing-indicator';
+            typing.id = 'typing';
+            typing.innerHTML = '<span></span><span></span><span></span>';
+            chatMensagens.appendChild(typing);
+            chatMensagens.scrollTop = chatMensagens.scrollHeight;
+        }
+
+        function removerDigitando() {
+            const t = document.getElementById('typing');
+            if (t) t.remove();
+        }
+
+        async function enviarMensagem() {
+            const texto = chatInput.value.trim();
+            if (!texto) return;
+
+            adicionarMensagem(texto, 'enviada');
+            chatInput.value = '';
+            chatInput.disabled = true;
+            btnEnviar.disabled = true;
+
+            historico.push({ role: 'user', content: texto });
+            salvarHistorico();
+
+            mostrarDigitando();
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mensagem: texto, historico: historico.slice(0, -1) })
+                });
+
+                const data = await response.json();
+                removerDigitando();
+
+                // Push da IA — troca o que já existe por esse bloco:
+                if (data.tipo === 'produtos') {
+                    adicionarCards(data.mensagem, data.produtos);
+                    historico.push({ role: 'assistant', content: data.mensagem, produtos: data.produtos });
+                } else {
+                    adicionarMensagem(data.resposta, 'recebida');
+                    historico.push({ role: 'assistant', content: data.resposta });
+                }
+                salvarHistorico();
+
+                if (!aberto) chatNotif.classList.remove('escondido');
+
+            } catch (err) {
+                removerDigitando();
+                adicionarMensagem('Erro ao conectar. Tente novamente.', 'recebida');
+            } finally {
+                chatInput.disabled = false;
+                btnEnviar.disabled = false;
+                chatInput.focus();
+            }
+        }
+
+        historico.forEach(m => {
+            if (m.role === 'user') {
+                adicionarMensagem(m.content, 'enviada');
+            } else {
+                if (m.produtos) {
+                    adicionarCards(m.content, m.produtos);
+                } else {
+                    adicionarMensagem(m.content, 'recebida');
+                }
+            }
+        });
+
+        btnEnviar.addEventListener('click', enviarMensagem);
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') enviarMensagem();
+        });
+    </script>
+</body>
+
+</html>

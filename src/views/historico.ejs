@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Histórico de compras | Nana Roupas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/navbar-horizontal.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/historico.css">
+  <link rel="stylesheet" href="/css/table.css">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <!-- adicionando um stylesheet para a mudança de status do pedido -->
+  <style>
+    .pedido-badge {
+      padding: 3px 11px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .status-em-processamento {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-aprovado {
+      background: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .status-em-trânsito {
+      background: #cfe2ff;
+      color: #084298;
+    }
+
+    .status-entregue {
+      background: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .status-reprovado {
+      background: #f8d7da;
+      color: #842029;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="navbar-container">
+    <%- include('navbar-horizontal') %>
+  </div>
+
+  <div class="layout">
+    <div class="titulo-tabela">
+      <h1>Histórico de compras</h1>
+      <div class="containers-CCF">
+        <label class="input-com-icon">
+          <input id="input-pesquisar" class="input-pesquisar" type="text" placeholder="Pesquisar pelo nº do pedido">
+          <svg id="btn-buscar" style="cursor:pointer" class="icon-pesquisar" width="20" height="20" viewBox="0 0 20 20"
+            fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_526_615)">
+              <path
+                d="M19 19L14.65 14.65M8.99999 4C10.3261 4 11.5978 4.5268 12.5355 5.46448C13.4732 6.40216 14 7.67392 14 9M17 9C17 10.5823 16.5308 12.129 15.6517 13.4446C14.7727 14.7602 13.5233 15.7855 12.0614 16.391C10.5996 16.9965 8.9911 17.155 7.43926 16.8463C5.88741 16.5376 4.46195 15.7757 3.34313 14.6569C2.22431 13.538 1.46241 12.1125 1.15373 10.5607C0.845053 9.00882 1.00343 7.40029 1.60893 5.93848C2.21443 4.47667 3.23981 3.22732 4.55541 2.34827C5.871 1.46922 7.41774 1 8.99999 1C11.1217 1 13.1566 1.84285 14.6568 3.34314C16.1571 4.84343 17 6.87827 17 9Z"
+                stroke="#66334D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_526_615">
+                <rect width="20" height="20" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+        </label>
+        <button id="btn-limpar" class="btn-limpar" style="display:none;">Limpar pesquisa</button>
+      </div>
+    </div>
+  </div>
+
+  <% if (!pedidos || pedidos.length===0) { %>
+    <div class="empty-state">
+      <p>Você ainda não realizou nenhuma compra.</p>
+      <a href="/produtos">Ver produtos</a>
+    </div>
+    <% } else { %>
+      <div class="historico-lista" id="listaPedidos">
+        <% pedidos.forEach(pedido=> { %>
+          <a class="pedido-row" href="/historico/<%= pedido.id_pedido %>" data-id="<%= pedido.id_pedido %>">
+
+            <div class="pedido-row-capa">
+              <img src="<%= pedido.url_imagem_capa || '/img/sem-imagem.png' %>" alt="Pedido">
+            </div>
+
+            <div class="pedido-row-info">
+              <div class="pedido-row-top">
+                <span class="pedido-numero">Pedido #<%= pedido.id_pedido %></span>
+                <span class="pedido-badge status-<%= pedido.status_pedido.toLowerCase().replace(/ /g, '-') %>">
+                  <%= pedido.status_pedido %>
+                </span>
+                <% if (pedido.status_troca_pedido) { %>
+                  <span
+                    class="pedido-badge status-troca-<%= pedido.status_troca_pedido === 'Solicitação de troca total' ? 'total' : 'parcial' %>">
+                    <%= pedido.status_troca_pedido %>
+                  </span>
+                  <% } %>
+              </div>
+              <div class="pedido-row-meta">
+                <% if (pedido.criado_em) { %>
+                  <span>
+                    <%= new Date(pedido.criado_em).toLocaleDateString('pt-BR') %>
+                  </span>
+                  <span class="dot">•</span>
+                  <% } %>
+                    <span>R$ <%= ( parseFloat(pedido.valor_produtos_calculado || 0) + parseFloat(pedido.frete || 0) -
+                        parseFloat(pedido.desconto || 0) ).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) %>
+                        </span>
+              </div>
+              
+              <div class="pedido-row-arrow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#995277" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </div>
+
+          </a>
+          <% }) %>
+      </div>
+      <% } %>
+
+        <script>
+          // Pesquisa por nº do pedido
+          document.getElementById('input-pesquisar').addEventListener('input', function () {
+            const termo = this.value.trim().toLowerCase();
+            const btnLimpar = document.getElementById('btn-limpar');
+            btnLimpar.style.display = termo ? 'inline-block' : 'none';
+
+            document.querySelectorAll('.pedido-row').forEach(row => {
+              row.style.display = row.dataset.id.includes(termo) ? 'flex' : 'none';
+            });
+          });
+
+          document.getElementById('btn-limpar').addEventListener('click', function () {
+            document.getElementById('input-pesquisar').value = '';
+            this.style.display = 'none';
+            document.querySelectorAll('.pedido-row').forEach(r => r.style.display = 'flex');
+          });
+        </script>
+
+</body>
+
+</html>

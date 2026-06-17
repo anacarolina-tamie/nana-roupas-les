@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro | Nana Roupas</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/formulario.css">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <svg class="logo" viewBox="0 0 208 77" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="7.51367" y="0.998535" width="75" height="75" rx="37.5" fill="#995277" />
+        <path
+          d="M17.543 75.6739C17.4583 75.7246 17.3963 75.8064 17.371 75.9021C17.3457 75.9978 17.3592 76.0994 17.4086 76.1849C17.458 76.2703 17.5394 76.3327 17.6349 76.3585C17.7305 76.3843 17.8323 76.3713 17.9185 76.3232C22.6608 72.8205 24.1946 67.0979 26.0884 61.9436C29.3147 51.9822 31.2717 41.6207 32.558 31.2277C33.1771 26.0371 33.6085 20.7732 33.6478 15.5204C33.6592 12.8639 33.5823 10.2412 33.2421 7.58712C33.0573 6.21306 32.828 4.91674 32.377 3.56062C31.9114 2.37494 31.3779 0.522919 29.2223 0.0316007C28.687 -0.0463669 27.9433 -0.0387752 27.4432 0.745207C27.3424 0.916804 27.283 1.09434 27.2494 1.26271C27.2148 1.43508 27.2106 1.59192 27.2104 1.67176C27.21 1.86649 27.2315 2.05502 27.2667 2.24604C27.3 2.43051 27.3582 2.65181 27.4074 2.81169C27.4482 2.94595 27.4946 3.08332 27.5464 3.22459C27.6498 3.50706 27.7745 3.80529 27.9194 4.12196C43.0888 28.7919 63.1787 51.766 79.2406 73.0319C73.5106 63.6783 68.8647 49.5845 65.5622 37.2375C63.9369 30.8652 62.5717 24.3717 62.2303 17.8849C61.7761 11.976 63.1098 2.65576 70.3278 4.59115C71.0847 4.73805 71.6417 4.8791 72.1954 5.07722C72.5299 5.19886 72.7957 5.32528 72.9926 5.44613C73.0765 5.4963 73.2104 5.59042 73.2901 5.6672C73.3728 5.74488 73.4209 5.81107 73.4492 5.86391C73.8033 6.17478 72.5917 7.46922 71.6453 8.09247C69.5122 9.59334 67.0942 10.7741 64.6344 11.9512C59.8263 14.2139 54.8 16.2817 49.8221 18.3511C39.8638 22.5159 29.7978 26.4611 20.2685 31.7109C17.8613 33.0777 15.5102 34.5085 13.3584 36.3503C12.3233 37.2541 11.2674 38.319 10.6252 39.5835C9.88824 40.9217 9.97604 42.6803 11.0331 43.8669C11.0962 43.9435 11.1869 43.9922 11.2857 44.0022C11.3845 44.0122 11.4832 43.9827 11.5601 43.92C11.637 43.8573 11.6859 43.7667 11.6961 43.6679C11.7062 43.5691 11.6768 43.4704 11.6145 43.3931C9.74274 41.2669 11.9424 38.6065 13.9005 36.9814C15.987 35.2287 18.3205 33.8339 20.7118 32.5069C30.1941 27.3973 40.2842 23.5394 50.2751 19.4568C55.2732 17.4262 60.3204 15.3962 65.1948 13.1473C67.6972 11.9693 70.1351 10.8139 72.4479 9.21476C72.7441 9.00344 72.9753 8.8301 73.2681 8.58716C73.5786 8.32788 73.8505 8.07109 74.082 7.81063C74.1843 7.69634 74.337 7.51097 74.4592 7.32572C74.5821 7.14068 74.6848 6.95008 74.761 6.74962C74.9324 6.36957 74.9586 5.65111 74.697 5.21124C74.5868 4.99935 74.4374 4.81036 74.2613 4.64268C74.0875 4.47483 73.8644 4.32098 73.738 4.24311C73.4368 4.05535 73.0882 3.89167 72.6863 3.74245C72.0247 3.50064 71.4135 3.34443 70.602 3.18158C68.7924 2.83439 67.0004 2.82893 65.2662 3.72246C63.5965 4.57532 62.4644 6.27188 61.8595 7.84604C60.6055 11.1761 60.5605 14.6281 60.6693 17.9539C60.9828 24.6374 62.3333 31.202 63.9411 37.6513C67.8172 50.4584 69.8042 63.2612 79.4314 74.8679C66.2014 47.3987 44.0433 28.1993 29.738 3.28963C29.6104 3.01089 29.5054 2.75825 29.4242 2.53669C29.3836 2.42595 29.349 2.32303 29.3203 2.22899C29.2854 2.11624 29.2493 1.9746 29.2327 1.88221C29.2146 1.7854 29.2093 1.71371 29.2095 1.67677C29.2061 1.63372 29.2295 1.63927 29.1666 1.75769C29.1051 1.8758 28.9398 1.97783 28.8764 1.98867C28.8051 2.00719 28.8199 1.98956 28.91 2.00494C35.3991 18.3924 29.8256 42.2986 24.9445 61.581C23.2446 66.6887 21.6841 72.4607 17.543 75.6739Z"
+          fill="#EBC4D8" />
+        <path
+          d="M108.794 29.1985H108.274V1.19853H109.634L126.274 27.0785V1.19853H126.794V29.1985H123.874L108.794 5.99854V29.1985Z"
+          fill="#F7F7F7" />
+        <path
+          d="M130.674 29.1985H130.194L142.154 1.19853L142.594 0.998535L152.674 29.1985H149.274L146.154 20.3985H134.474L130.674 29.1985ZM140.914 5.51854L134.634 19.9985H146.034L140.914 5.51854Z"
+          fill="#F7F7F7" />
+        <path
+          d="M156.606 29.1985H156.086V1.19853H157.446L174.086 27.0785V1.19853H174.606V29.1985H171.686L156.606 5.99854V29.1985Z"
+          fill="#F7F7F7" />
+        <path
+          d="M178.486 29.1985H178.006L189.966 1.19853L190.406 0.998535L200.486 29.1985H197.086L193.966 20.3985H182.286L178.486 29.1985ZM188.726 5.51854L182.446 19.9985H193.846L188.726 5.51854Z"
+          fill="#F7F7F7" />
+      </svg>
+    </aside>
+
+    <form method="post" class="content" id="formCadastro">
+      <a onclick="descartar('/login')" style="cursor: pointer;">
+        <svg class="back-button" viewBox="0 0 44 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M30.6603 17C29.5596 18.9064 27.8606 20.3963 25.8268 21.2388C23.793 22.0812 21.5381 22.229 19.4117 21.6592C17.2854 21.0895 15.4065 19.834 14.0664 18.0876C12.7263 16.3411 12 14.2013 12 12C12 9.79864 12.7263 7.65884 14.0664 5.9124C15.4065 4.16596 17.2854 2.91049 19.4117 2.34074C21.5381 1.77099 23.793 1.9188 25.8268 2.76121C27.8606 3.60363 29.5596 5.09356 30.6603 6.99998M22.0002 7.99998L18.0002 12M18.0002 12L22.0002 16M18.0002 12H32.0002"
+            stroke="#995277" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+
+      <h1 class="title">Cadastro</h1>
+      <h1 class="texto-etapa">Preencha os campos com atenção</h1>
+      <h2 class="subtitle">Dados pessoais</h2>
+
+      <div class="inputs-grid">
+        <div class="w-50">
+          <div class="label">Nome completo</div>
+          <input class="input" name="nomeCliente" placeholder="Insira o nome completo" required maxlength="100">
+        </div>
+
+        <div class="w-25">
+          <div class="label">Gênero</div>
+          <div class="container-select">
+            <select class="dropdown" name="genero" required>
+              <option value="" disabled selected>Selecione</option>
+              <option value="Feminino">Feminino</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Não binário">Não binário</option>
+              <option value="Outro">Outro</option>
+              <option value="Prefiro não informar">Prefiro não informar</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="w-25">
+          <div class="label">Data de nascimento</div>
+          <input class="input" name="dataNasc" type="date" required min="1920-01-01" id="dataNasc">
+        </div>
+
+        <div class="w-50">
+          <div class="label">CPF</div>
+          <input class="input" id="cpf" name="cpf" placeholder="000.000.000-00" required>
+        </div>
+
+        <div class="w-50">
+          <div class="label">Telefone</div>
+          <input class="input" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+        </div>
+
+        <div class="w-100">
+          <div class="label">E-mail</div>
+          <input class="input" name="email" placeholder="email@exemplo.com" required type="email">
+        </div>
+
+        <div class="w-50">
+          <div class="label">Senha</div>
+          <button class="desocultar-senha" type="button" onclick="toggleSenha('senha')">👁</button>
+          <input class="input" name="senha" id="senha" type="password" placeholder="No mínimo 8 caracteres" required>
+        </div>
+
+        <div class="w-50">
+          <div class="label">Confirmar senha</div>
+          <button class="desocultar-senha" type="button" onclick="toggleSenha('confirmarSenha')">👁</button>
+          <input class="input" name="confirmarSenha" id="confirmarSenha" type="password" placeholder="Confirme a senha"
+            required>
+        </div>
+      </div>
+
+
+      <h2 class="subtitle">
+        Endereço de cobrança
+      </h2>
+      <div class="inputs-grid">
+
+        <div class="w-50">
+
+          <div class="label">
+
+            Tipo de residência</div>
+
+          <input class="input" name="cobranca[tpResidencia]" placeholder="Ex: Apartamento" required maxlength="100">
+
+        </div>
+
+        <div class="w-50">
+
+          <div class="label">
+
+            CEP
+
+          </div>
+
+          <input class="input" id="cepCobranca" name="cobranca[cep]" required placeholder="00000-000" min="8">
+
+        </div>
+
+        <div class=" w-50">
+
+          <div class="label">
+
+            Tipo de logradouro
+
+          </div>
+
+          <input class="input" name="cobranca[tpLogradouro]" placeholder="Insira o tipo de logradouro" required
+            maxlength="100">
+
+        </div>
+
+        <div class="w-50">
+
+          <div class="label">
+
+            Logradouro</div>
+
+          <input class="input" name="cobranca[logradouro]" placeholder="Insira o logradouro" required maxlength="100">
+
+        </div>
+
+        <div class="w-25">
+
+          <div class="label">
+
+            País
+
+          </div>
+
+          <input class="input" name="cobranca[pais]" placeholder="Insira o país" required maxlength="100">
+
+        </div>
+
+        <div class=" w-25">
+
+          <div class="label">
+
+            Estado
+
+          </div>
+
+          <div class="container-select">
+
+            <input class="input" name="cobranca[estado]" placeholder="Insira o estado" required maxlength="100">
+
+          </div>
+
+        </div>
+
+        <div class="w-50">
+
+          <div class="label">
+
+            Cidade</div>
+
+          <input class="input" name="cobranca[cidade]" placeholder="Insira a cidade" required maxlength="100">
+
+        </div>
+
+        <div class="w-50">
+
+          <div class="label">
+
+            Bairro
+
+          </div>
+
+          <input class="input" name="cobranca[bairro]" placeholder="Insira o bairro" required maxlength="100">
+
+        </div>
+
+        <div class=" w-25">
+
+          <div class="label">
+
+            Número
+
+          </div>
+
+          <input class="input" name="cobranca[numero]" placeholder="Insira o número" required maxlength="20">
+
+        </div>
+
+        <div class="w-25">
+
+          <div class="label">
+
+            Complemento (opcional)</div>
+
+          <input class="input" name="cobranca[complemento]" placeholder="Insira o complemento" maxlength="100">
+
+        </div>
+
+        <div class="w-50">
+
+          <div class="label">
+
+            Nome do endereço
+
+          </div>
+
+          <input class="input" name="cobranca[nomeEndereco]"
+            placeholder="Insira uma frase curta para identificação do endereço" required maxlength="100">
+
+        </div>
+      </div>
+      <div class="add-endereco">
+        <h1 class="subtitle">Endereços de entrega</h1>
+
+        <div id="container-enderecos"></div>
+
+        <% if (!cadastro.enderecos || cadastro.enderecos.length < 3) { %>
+          <button class="btn-rosa" type="button" onclick="adicionarEndereco()">
+            + adicionar endereço
+          </button>
+          <% } %>
+      </div>
+
+      <div class="add-endereco">
+        <h1 class="subtitle">Cartões</h1>
+        <button class="btn-rosa" type="button" onclick="adicionarCartao()">+ adicionar cartão</button>
+        <div id="container-cartoes"></div>
+      </div>
+
+      <div class="buttons">
+        <div id="erros"></div>
+        <button class="purple-button" type="submit">Salvar Cadastro</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+  <script type="module" src="/js/adicionar-form.js"></script>
+  <script type="module" src="/js/cadastro.js"></script>
+  <script type="module" src="/js/mascaras.js"></script>
+  <script type="module" src="/js/valSenha.js"></script>
+  <script type="module" src="/js/dataAtual.js"></script>
+  <script type="module" src="/js/valCliente.js"></script>
+  <script type="module" src="/js/formulario.js"></script>
+  <script type="module" src="/js/toast.js"></script>
+</body>
+
+</html>

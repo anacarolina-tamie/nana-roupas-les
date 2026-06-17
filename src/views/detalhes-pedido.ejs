@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedido #<%= pedido.id_pedido %> | Nana Roupas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/navbar-horizontal.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/historico.css">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+
+<body>
+
+  <div class="navbar-container">
+    <%- include('navbar-horizontal') %>
+  </div>
+
+  <!-- CABEÇALHO DO DETALHE -->
+  <div class="detalhe-header">
+    <a class="btn-voltar-detalhe" href="/historico">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#995277" stroke-width="2">
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
+      Voltar
+    </a>
+    <div class="detalhe-titulo-wrap">
+      <span class="detalhe-titulo">Pedido #<%= pedido.id_pedido %></span>
+      <span class="pedido-badge status-<%= pedido.status_pedido.toLowerCase().replace(/ /g, '-') %>">
+        <%= pedido.status_pedido %>
+      </span>
+
+      <%# Badge de troca — só aparece se houver solicitação %>
+        <% if (pedido.status_troca_pedido) { %>
+          <span
+            class="pedido-badge status-troca-<%= pedido.status_troca_pedido === 'Solicitação de troca total' ? 'total' : 'parcial' %>">
+            <%= pedido.status_troca_pedido %>
+          </span>
+          <% } %>
+            <%# Aviso de reprovação com cupom de estorno %>
+              <% if (pedido.status_pedido==='Reprovado' ) { %>
+                <div
+                  style="background:#fff0f0; border:1.5px solid #f5c6cb; border-radius:12px; padding:16px 20px; margin:16px 0; color:#842029; font-size:14px; font-family:'Montserrat',sans-serif; line-height:1.6;">
+                  <strong>Pedido reprovado</strong><br>
+                  Seu pedido foi reprovado pela nossa equipe. Um cupom de estorno no valor de
+                  <strong>R$ <%= parseFloat(pedido.valor_total).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) %>
+                  </strong>
+                  foi gerado para sua conta e pode ser utilizado em futuras compras.<br>
+                  <span style="font-size:12px; color:#a05050;">Verifique o cupom na tela de Configurações.</span>
+                </div>
+                <% } %>
+    </div>
+    <% if (pedido.criado_em) { %>
+      <span class="detalhe-data">
+        <%= new Date(pedido.criado_em).toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' }) %>
+      </span>
+      <% } %>
+  </div>
+
+  <div class="detalhe-body">
+
+    <!-- ITENS DO PEDIDO -->
+    <section class="detalhe-section">
+      <h2 class="detalhe-section-title">Itens do pedido</h2>
+
+      <% const itensSemTroca=pedido.itens.filter(i=> !i.status_troca); %>
+        <% const podesolicitartroca=pedido.status_pedido==='Entregue' ||
+          pedido.status_troca_pedido==='Solicitação de troca parcial' ; %>
+
+          <% pedido.itens.forEach(item=> { %>
+            <div class="detalhe-item">
+              <img src="<%= item.url_imagem || '/img/sem-imagem.png' %>" alt="<%= item.nome_produto %>">
+              <div class="detalhe-item-info">
+                <p class="detalhe-item-nome">
+                  <%= item.nome_produto %>
+                </p>
+                <p class="detalhe-item-meta">
+                  <%= item.tamanho || '—' %> · <%= item.nome_cor || '—' %> · Qtd: <%= item.qtde_item %>
+                </p>
+                <p class="detalhe-item-preco">
+                  R$ <%= parseFloat(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) %>
+                </p>
+
+                <%# Status de troca do item %>
+
+                  <%# Solicitações existentes — um card por solicitação %>
+                    <% item.solicitacoes.forEach(sol=> { %>
+                      <% if (sol.status_troca==='Pendente' ) { %>
+                        <div class="status-box status-pendente">
+                          <strong>Solicitação enviada (<%= sol.qtde_item %>
+                              <%= sol.qtde_item==1 ? 'item' : 'itens' %>)</strong>
+                          Aguardando aprovação do administrador
+                        </div>
+                        <% } else if (sol.status_troca==='Aprovada' ) { %>
+                          <div class="status-box status-aprovada">
+                            <strong>
+                              ✓ Solicitação aprovada (<%= sol.qtde_item %>
+                                <%= sol.qtde_item==1 ? 'item' : 'itens' %>).
+                                  Pedimos que envie o produto para o seguinte endereço:<br><br>
+
+                                  Rua das Flores, 123<br>
+                                  Bairro Jardim Primavera<br>
+                                  São Paulo - SP<br>
+                                  CEP: 01234-567<br><br>
+
+                                  Quando o(s) produto(s) forem recebido(s), será gerado um cupom de troca no valor dos
+                                  produtos.
+                            </strong>
+                            <% if (sol.cupom) { %>
+                              <div class="cupom-linha">
+                                <span>Cupom:</span>
+                                <span class="cupom-codigo">
+                                  <%= sol.cupom.cod_cupom_troca %>
+                                </span>
+                              </div>
+                              <div class="cupom-linha">
+                                <span>Valor:</span>
+                                <span><strong>R$ <%= parseFloat(sol.cupom.valor_cupom_troca).toLocaleString('pt-BR', {
+                                      minimumFractionDigits: 2 }) %></strong></span>
+                              </div>
+                              <% } %>
+                          </div>
+                          <% } else if (sol.status_troca==='Negada' ) { %>
+                            <div class="status-box status-reprovada">
+                              <strong>Solicitação reprovada (<%= sol.qtde_item %>
+                                  <%= sol.qtde_item==1 ? 'item' : 'itens' %>)</strong>
+                            </div>
+                            <% } else if (sol.status_troca==='Não recebida' ) { %>
+                              <div class="status-box status-nao-recebida">
+                                <strong>Mercadoria(s) não recebidas (<%= sol.qtde_item %>
+                                    <%= sol.qtde_item==1 ? 'item' : 'itens' %>)</strong>
+                                O cupom de troca não será gerado.
+                              </div>
+                              <% } else if (sol.status_troca==='Recebida' ) { %>
+                                <div class="status-box status-mercadoria-recebida">
+                                  <strong>Mercadoria(s) recebidas (<%= sol.qtde_item %>
+                                      <%= sol.qtde_item==1 ? 'item' : 'itens' %>)</strong>
+                                  Um cupom de troca no valor dos produtos devolvidos está disponível, acesse-o nas
+                                  Configurações.
+                                </div>
+                                <% } %>
+
+                                  <% }) %>
+
+                                    <%# Botão — aparece se ainda tem quantidade disponível %>
+                                      <% if (item.qtd_restante> 0 && podesolicitartroca) { %>
+                                        <button class="btn-trocar-item" data-id="<%= item.id_item_pedido %>"
+                                          data-nome="<%= item.nome_produto %>" data-max="<%= item.qtd_restante %>">
+                                          <% if (item.solicitacoes.length===0) { %>
+                                            Solicitar troca deste item
+                                            <% } else { %>
+                                              Solicitar troca dos <%= item.qtd_restante %> restantes
+                                                <% } %>
+                                        </button>
+                                        <% } %>
+
+
+
+
+
+              </div>
+            </div>
+            <% }) %>
+    </section>
+
+    <!-- RESUMO FINANCEIRO -->
+    <section class="detalhe-section">
+      <h2 class="detalhe-section-title">Resumo financeiro</h2>
+      <div class="resumo-financeiro">
+        <div class="resumo-row">
+          <span>Subtotal</span>
+          <span>R$ <%= parseFloat( pedido.itens.reduce((a, i)=> a + (parseFloat(i.preco) * i.qtde_item), 0)
+              ).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+              %></span>
+        </div>
+        <div class="resumo-row">
+          <span>Frete</span>
+          <span>
+            <%= pedido.frete> 0
+              ? 'R$ ' + parseFloat(pedido.frete).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+              : 'Grátis' %>
+          </span>
+        </div>
+        <% if (pedido.desconto && parseFloat(pedido.desconto)> 0) { %>
+          <div class="resumo-row">
+            <span>Desconto</span>
+            <span style="color:#2d7a4f;">- R$ <%= parseFloat(pedido.desconto).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2 }) %></span>
+          </div>
+          <% } %>
+            <div class="resumo-row resumo-total">
+              <span>Total</span>
+              <span>R$ <%= ( pedido.itens.reduce((a, i)=> a + (parseFloat(i.preco) * i.qtde_item), 0)
+                  + parseFloat(pedido.frete || 0)
+                  - parseFloat(pedido.desconto || 0)
+                  ).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+                  %></span>
+            </div>
+      </div>
+    </section>
+
+    <!-- AÇÕES DISPONÍVEIS -->
+    <!-- AÇÕES DISPONÍVEIS -->
+
+    <% if (itensSemTroca.length> 0) { %>
+      <section class="detalhe-section">
+        <h2 class="detalhe-section-title">Ações disponíveis</h2>
+        <button class="btn-solicitar-troca" id="btnTrocaCompleta" <% if (!podesolicitartroca) { %>disabled<% } %>>
+            Solicitar troca do pedido completo
+        </button>
+        <p class="troca-obs">Apenas pedidos entregues podem ter itens solicitados para troca.</p>
+      </section>
+      <% } %>
+
+        <!-- MODAL DE CONFIRMAÇÃO DE TROCA -->
+        <div class="modal-backdrop" id="modalTroca" style="display:none;">
+          <div class="modal-troca">
+            <h3 id="modalTrocaTitulo">Solicitar troca</h3>
+            <p id="modal-item-nome-unico" style="font-weight:600; margin-bottom:4px;"></p>
+            <p id="modalTrocaDesc"></p>
+
+            <!-- Troca de item único -->
+            <div id="campo-quantidade" style="display:none;">
+              <p>Quantidade</p>
+              <input type="number" id="input-quantidade" min="1">
+              <p>Motivo da troca</p>
+              <input type="text" id="input-motivo-unico" placeholder="Descreva o motivo...">
+            </div>
+
+            <!-- Troca total: um bloco por item -->
+            <div id="lista-itens-modal" style="display:none;">
+              <!-- preenchido dinamicamente pelo JS -->
+            </div>
+
+            <div class="modal-troca-footer">
+              <button class="btn-cancelar-modal" id="btnCancelarModal">Cancelar</button>
+              <button class="btn-confirmar-modal" id="btnConfirmarTroca">Enviar solicitação</button>
+            </div>
+          </div>
+        </div>
+        <script>
+          const _itens = "<%- Buffer.from(JSON.stringify(
+          pedido.itens
+            .filter(i => !i.status_troca)
+            .map(i => ({ id: i.id_item_pedido, nome: i.nome_produto, qtd: i.qtde_item }))
+  )).toString('base64') %> ";
+          const ITENS_PEDIDO = JSON.parse(atob(_itens));
+          const ID_PEDIDO = <%= pedido.id_pedido %>;
+        </script>
+        <script src="/js/modal-troca.js"></script>
+
+</body>
+
+</html>
